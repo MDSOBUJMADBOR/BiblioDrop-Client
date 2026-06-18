@@ -1,173 +1,152 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 import {
-  Bars,
-  Xmark,
-  ChevronDown,
+  Menu,
+  X,
   User,
-  BookOpen,
-  House,
-} from "@gravity-ui/icons";
+  Book,
+  BarChart,
+  LogOut,
+  ChevronRight,
+  ChevronDown,
+} from "lucide-react";
+import { Button } from "@heroui/react";
 
-const Navbar = () => {
+const toggleMenu = () => {
+  setOpen(prev => !prev); 
+};
+
+const navItems = [
+ {
+path: "/",
+text: "Home"
+ },
+ {
+path: "/books",
+text: "Browse Books"
+ },
+ {
+path: "/profile",
+text: "Profile"
+ },
+ {
+path: "/profile",
+text: "Books"
+ },
+ {
+path: "/profile",
+text: "Analytics"
+ },
+
+]
+
+export default function Navbar() {
   const pathname = usePathname();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [dashboardOpen, setDashboardOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
 
-  // fake auth (replace later)
-  const user = true;
-  const role = "admin";
-
-  const linkClass = (path) =>
-    pathname === path
-      ? "text-blue-500 font-semibold"
-      : "text-gray-700 hover:text-blue-500";
+  const isActive = (path) => pathname === path;
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
+    <nav className="bg-gradient-to-r from-[#0b1d3a] to-[#0f2a5c] text-white">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
 
         {/* Logo */}
-        <Link href="/" className="text-2xl font-bold text-blue-600">
-          BiblioDrop
+        <Link href="/" className="text-xl font-bold">
+          Book<span className="text-yellow-400">Nest</span>
         </Link>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-6">
+        {/* Desktop */}
+        <div className="hidden md:flex gap-6 items-center">
+          <Link href="/" className={isActive("/") ? "text-yellow-400" : ""}>Home</Link>
+          <Link href="/books" className={isActive("/books") ? "text-yellow-400" : ""}>Browse Books</Link>
 
-          <Link href="/" className={linkClass("/")}>
-            <span className="flex items-center gap-1">
-              <House width={18} /> Home
-            </span>
-          </Link>
-
-          <Link href="/books" className={linkClass("/books")}>
-            <span className="flex items-center gap-1">
-              <BookOpen width={18} /> Browse Books
-            </span>
-          </Link>
-
-          {/* Dashboard Dropdown */}
-          {user && (
-            <div className="relative">
-              <button
-                onClick={() => setDashboardOpen(!dashboardOpen)}
-                className="flex items-center gap-1 text-gray-700 hover:text-blue-500"
-              >
-                <User width={18} />
-                Dashboard
-                <ChevronDown width={16} />
-              </button>
-
-              {dashboardOpen && (
-                <div className="absolute top-10 left-0 bg-white shadow-lg rounded-md w-48 p-2">
-                  <Link
-                    href="/dashboard/profile"
-                    className="block px-3 py-2 hover:bg-gray-100 rounded"
-                  >
-                    My Profile
-                  </Link>
-
-                  <Link
-                    href="/dashboard/books"
-                    className="block px-3 py-2 hover:bg-gray-100 rounded"
-                  >
-                    My Books
-                  </Link>
-
-                  {role === "admin" && (
-                    <Link
-                      href="/dashboard/admin"
-                      className="block px-3 py-2 hover:bg-gray-100 rounded"
-                    >
-                      Admin Panel
-                    </Link>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Auth */}
-          {user ? (
-            <button className="bg-red-500 text-white px-4 py-2 rounded">
-              Logout
+          {/* Dropdown */}
+          <div className="relative">
+            <button onClick={() => setDropdown(!dropdown)}>
+             <div className="flex"> Dashboard {!dropdown ? <ChevronRight /> :  <ChevronDown />}</div>
             </button>
-          ) : (
-            <Link
-              href="/login"
-              className="bg-blue-500 text-white px-4 py-2 rounded"
-            >
-              Login
-            </Link>
-          )}
+
+            {dropdown && (
+              <div className="absolute top-10 bg-white text-black rounded shadow p-2 w-44">
+                <Link href="/dashboard/profile" className="flex gap-2 p-2 hover:bg-gray-100">
+                  <User size={16} /> Profile
+                </Link>
+                <Link href="/dashboard/books" className="flex gap-2 p-2 hover:bg-gray-100">
+                  <Book size={16} /> Books
+                </Link>
+                <Link href="/dashboard/analytics" className="flex gap-2 p-2 hover:bg-gray-100">
+                  <BarChart size={16} /> Analytics
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <Button className="bg-yellow-400 text-black px-4 py-1 rounded flex items-center gap-2">
+            <Link href={'/signin'}><div className="flex gap-4"><LogOut size={16} /> Login</div></Link>
+          </Button>
         </div>
 
-        {/* Mobile Button */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden"
-        >
-          {menuOpen ? <Xmark width={24} /> : <Bars width={24} />}
-        </button>
+        {/* Mobile Button */}   
+
+ <div onClick={() => setOpen(!open)} className="dropdown dropdown-center sm:hidden ">
+  
+  <div onClick={toggleMenu} className="sm:hidden cursor-pointer">
+  {open ? <X className="text-white" /> : <Menu className="text-white" />}
+</div>        
       </div>
 
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-white shadow-md px-4 pb-4">
+      {/* Mobile Menu */}  
 
-          <Link href="/" className="block py-2">
-            Home
-          </Link>
 
-          <Link href="/books" className="block py-2">
-            Browse Books
-          </Link>
+<ul
+  className={` sm:hidden absolute top-12 left-0 w-full bg-[#31537c] shadow-md flex flex-col items-center gap-2 py-4 px-5 transition-all duration-300 ${
+    open ? "max-h-96 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+  }`}
+>
+  {navItems.map((item, index) => (
+    <li className="w-full  border rounded-md " key={index}>
+      <Link
+        href={item.path}
+        onClick={() => setOpen(false)}
+        className="block w-full py-3 text-center rounded-lg transition-all duration-400 ease-in-out text-white "
+      >
+        {item.text}
+      </Link>
+    </li>
+  ))}
+{/* {!user && <li className="w-full px-4">
+    <Link
+      href="/login"
+      className="block w-full py-2 text-center rounded-lg transition-all duration-300 ease-in-out hover:bg-[#3cd86b] text-white"
+    >
+      <Button className="text-lg " variant="light">Login</Button>
+    </Link>
+  </li>}
+{user && <li className="flex gap-3">
+              <Avatar size="sm">
+                <Avatar.Image
+                  alt="John Doe"
+                  src={user?.image}
+                  referrerPolicy="no-referrer"
+                />
+                <Avatar.Fallback>{user?.name.charAt(0)}</Avatar.Fallback> 
+              </Avatar>
 
-          {/* Dashboard */}
-          {user && (
-            <div>
-              <button
-                onClick={() => setDashboardOpen(!dashboardOpen)}
-                className="flex justify-between w-full py-2"
-              >
-                Dashboard <ChevronDown width={16} />
-              </button>
+              <Button onClick={handleSignOut} size="sm" variant="danger">LoginOut</Button>
+            </li>
+} */}
+<li>login</li>
+  </ul>
 
-              {dashboardOpen && (
-                <div className="ml-4">
-                  <Link href="/dashboard/profile" className="block py-1">
-                    My Profile
-                  </Link>
-                  <Link href="/dashboard/books" className="block py-1">
-                    My Books
-                  </Link>
-                </div>
-              )}
-            </div>
-          )}
+  
+</div>
 
-          {/* Auth */}
-          {user ? (
-            <button className="mt-3 w-full bg-red-500 text-white py-2 rounded">
-              Logout
-            </button>
-          ) : (
-            <Link
-              href="/login"
-              className="block mt-3 bg-blue-500 text-white py-2 rounded text-center"
-            >
-              Login
-            </Link>
-          )}
-        </div>
-      )}
+
     </nav>
   );
-};
-
-export default Navbar;
+}
