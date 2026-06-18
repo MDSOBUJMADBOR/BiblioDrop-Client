@@ -13,8 +13,10 @@ import {
   LogOut,
   ChevronRight,
   ChevronDown,
+  LayoutDashboard,
 } from "lucide-react";
 import { Button } from "@heroui/react";
+import Image from "next/image";
 
 const toggleMenu = () => {
   setOpen(prev => !prev); 
@@ -65,6 +67,11 @@ export default function Navbar() {
           <Link href="/" className={isActive("/") ? "text-yellow-400" : ""}>Home</Link>
           <Link href="/books" className={isActive("/books") ? "text-yellow-400" : ""}>Browse Books</Link>
 
+
+
+
+
+
           {/* Dropdown */}
           <div className="relative">
             <button onClick={() => setDropdown(!dropdown)}>
@@ -72,9 +79,9 @@ export default function Navbar() {
             </button>
 
             {dropdown && (
-              <div className="absolute top-10 bg-white text-black rounded shadow p-2 w-44">
-                <Link href="/dashboard/profile" className="flex gap-2 p-2 hover:bg-gray-100">
-                  <User size={16} /> Profile
+              <div className="absolute  top-10  text-white bg-amber-400 rounded  p-2 w-44">
+                <Link href="/dashboard/profile" className="flex gap-2 p-2 hover:bg-gray-100 ">
+                  <User size={16} /> Profile 
                 </Link>
                 <Link href="/dashboard/books" className="flex gap-2 p-2 hover:bg-gray-100">
                   <Book size={16} /> Books
@@ -83,19 +90,28 @@ export default function Navbar() {
                   <BarChart size={16} /> Analytics
                 </Link>
               </div>
+             
             )}
           </div>
 
           <Button className="bg-yellow-400 text-black px-4 py-1 rounded flex items-center gap-2">
             <Link href={'/signin'}><div className="flex gap-4"><LogOut size={16} /> Login</div></Link>
+            
           </Button>
         </div>
+
+
+
+
+
+
+
 
         {/* Mobile Button */}   
 
  <div onClick={() => setOpen(!open)} className="dropdown dropdown-center sm:hidden ">
   
-  <div onClick={toggleMenu} className="sm:hidden cursor-pointer">
+  <div onClick={toggleMenu} className="md:hidden cursor-pointer">
   {open ? <X className="text-white" /> : <Menu className="text-white" />}
 </div>        
       </div>
