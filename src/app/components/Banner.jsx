@@ -4,28 +4,34 @@ import Image from "next/image";
 export default function HeroBanner() {
   return (
     <div className="max-w-7xl mx-auto">
-<div className="flex items-center">
-    <div>
-      <p>Your Local Library, Delivered</p>  
-<h1>Discover Books . 
+<div className="grid md:grid-cols-2  gap-10  items-center justify-between  bg-gradient-to-r from-[#0b0f2a] via-[#0b0f2acc] ">
+
+
+    <div className="flex-1 border border-red-500 space-y-4 ml-3 mt-5 md:mt-0">
+      <p className="text-white">Your Local Library, Delivered</p>  
+<h1 className="text-4xl md:text-6xl font-bold leading-tight text-white">Discover Books. 
     <br />
-    <span>Delivered to You.</span>
+    <span className="text-blue-400">Delivered to You.</span>
 </h1>
-<p>  Connect with local libraries & independent book owners. Request your
-            favorite books and get them delivered to your doorstep.</p>
-<Button>Browse Books</Button>
-<Button>Here it Works</Button>
+<p className="mt-4 text-gray-300 max-w-lg"> Connect with local libraries & independent book owners. <br /> Request your
+            favorite books and get them <br /> delivered to your doorstep.</p>
+            <br />
+<Button className="rounded-md mr-4">Browse Books</Button>
+<Button className="rounded-md ">Here it Works</Button>
     </div>
-    <div>
+    <div className="flex-1 border border-green-500">
  <Image
             src="/chare.png"
             alt="Pets"
-            width={500}
+            width={700}
             height={500}
-            className="object-contain rounded-lg"
+            
+            className="object-contain"
           />
 
     </div>
+
+
 </div>
     </div>
   );
