@@ -39,12 +39,12 @@ console.log(user,'user');
 
   return (
     <div className="bg-cyan-900 min-h-screen flex items-center justify-center">
-        <div className="bg-gray-500 flex items-center justify-center rounded-3xl p-6 max-w-2xl mx-auto border mt-5">
+        <div className="bg-gray-500 w-full max-w-lg  rounded-2xl p-8  border">
       <Surface className="w-full bg-gray-500">
         <Form onSubmit={onSubmit}>
           <Fieldset className="w-full">
-            <Fieldset.Legend className="text-3xl font-bold text-center text-white">Signin</Fieldset.Legend>
-            <Description>Create your account</Description>
+            <Fieldset.Legend className="text-3xl font-bold text-center text-white">Welcome Back!</Fieldset.Legend>
+            <Description className="font-bold text-center text-white text-lg">Login to your account!</Description>
             <Fieldset.Group>
               <TextField isRequired name="email" type="email">
                 <Label className="text-white">Email</Label>
@@ -60,7 +60,7 @@ console.log(user,'user');
             </Fieldset.Group>
 
             <Button type="submit" className={"w-full bg-cyan-700"}  disabled={loading}>
-               {loading ? "Signin..." : "Signin"}
+               {loading ? "Login..." : "Login"}
             </Button>
           </Fieldset>
         </Form>

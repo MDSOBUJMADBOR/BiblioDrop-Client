@@ -58,8 +58,8 @@ console.log(user,'user');
       <Surface className="w-full bg-gray-500">
         <Form onSubmit={onSubmit}>
           <Fieldset className="w-full">
-            <Fieldset.Legend className="text-3xl font-bold text-center text-white">Signup</Fieldset.Legend>
-            <Description className="text-center font-bold text-white">Create your account</Description>
+            <Fieldset.Legend className="text-3xl font-bold text-center text-white">Create Your Account</Fieldset.Legend>
+            <Description className="font-bold text-center text-white text-lg">Join BiblioDrop today!</Description>
             <Fieldset.Group>
               <TextField isRequired name="name">
                 <Label className="text-white">Full Name</Label>
@@ -136,7 +136,7 @@ console.log(user,'user');
             Already have an account?{" "}
             <Link href="/signin">
               <span className="text-blue-400 cursor-pointer font-bold hover:underline text-xl">
-                SignIn
+                Login
               </span>
             </Link>
           </p>
