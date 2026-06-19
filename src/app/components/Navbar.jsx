@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { Button } from "@heroui/react";
 import Image from "next/image";
+import { authClient } from "@/lib/auth-client";
 
 const toggleMenu = () => {
   setOpen(prev => !prev); 
@@ -47,12 +48,18 @@ text: "Analytics"
 ]
 
 export default function Navbar() {
+  const userData = authClient.useSession();
+const user = userData.data?.user; 
+console.log(user,'user');
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
+  const [dropdown, setDropdown] = useState(false); 
 
   const isActive = (path) => pathname === path;
+const handleSignOut = async () => {
+await authClient.signOut();
 
+}
   return (
     <nav className="bg-gradient-to-r from-[#0b1d3a] to-[#0f2a5c] text-white">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -73,35 +80,40 @@ export default function Navbar() {
 
 
           {/* Dropdown */}
-          <div className="relative">
+          {user && <div className="relative">
             <button onClick={() => setDropdown(!dropdown)}>
-             <div className="flex"> Dashboard {!dropdown ? <ChevronRight /> :  <ChevronDown />}</div>
+             <div className="flex bg-black"> Dashboard {!dropdown ? <ChevronRight /> :  <ChevronDown /> } </div>
             </button>
 
             {dropdown && (
               <div className="absolute z-50  top-10  text-white  bg-[#0d244b] rounded  p-2 w-44">
                 <Link href="/dashboard/profile" className="flex gap-2 p-2 hover:bg-gray-300 hover:text-black">
-                  <User size={16} /> Profile 
+                 <div className="flex items-center gap-2"> <User size={16} /> Profile </div>
                 </Link>
                 <Link href="/dashboard/books" className="flex gap-2 p-2 hover:bg-gray-300 hover:text-black">
-                  <Book size={16} /> Books
+                  <div className="flex items-center gap-2"><Book size={16} /> Books</div>
                 </Link>
                 <Link href="/dashboard/analytics" className="flex gap-2 p-2 hover:bg-gray-300 hover:text-black">
-                  <BarChart size={16} /> Analytics
+                 <div className="flex items-center gap-2"> <BarChart size={16} /> Analytics </div>
+                </Link>
+                <Link href="/dashboard/analytics" onClick={handleSignOut} className="flex gap-2 p-2 bg-red-500 rounded-lg mt-3">
+                  <div className="flex items-center gap-2"><LogOut size={16} /> LogOut  </div>
                 </Link>
               </div>
              
             )}
-          </div>
+          </div>}
 
-          <Button className="bg-yellow-400 text-black px-4 py-1 rounded flex items-center gap-2">
-            <Link href={'/signin'}><div className="flex gap-4"><LogOut size={16} /> Login</div></Link>          
-            
+
+         {!user && (<div>
+           <Button className="bg-yellow-400 text-black px-4 py-1 rounded flex items-center gap-2">
+            <Link href={'/signin'}><div className="flex gap-4"><LogOut size={16} /> Login</div></Link>  
           </Button>
           <Button className="bg-yellow-400 text-black px-4 py-1 rounded flex items-center gap-2">
-           <Link href={'/signup'}><div className="flex gap-4"><LogOut size={16} /> Register</div></Link>      
-            
+           <Link href={'/signup'}><div className="flex gap-4"><LogOut size={16} /> Register</div></Link> 
           </Button>
+          </div>)}
+        
 
         </div>
 
