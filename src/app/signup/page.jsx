@@ -12,15 +12,33 @@ import {
   ListBox,
   Select,
   TextField,
+  Separator,
 } from "@heroui/react";
+import Link from "next/link";
+import { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 // import { redirect } from "next/navigation";
-import React from "react";
+
 
 export default function SignUpPage() {
+   const [loading, setLoading] = useState(false);
   const onSubmit = async (e) => {
-    // e.preventDefault();
-    // const formData = new FormData(e.currentTarget);
-    // const user = Object.fromEntries(formData.entries());
+    e.preventDefault();
+    setLoading(true);
+    const formData = new FormData(e.currentTarget);
+    const user = Object.fromEntries(formData.entries());
+
+
+ const password = user.password;
+    const confirm = user.confirmPassword;
+
+    // ✅ Password match check
+    if (password !== confirm) {
+      alert("Passwords do not match");
+      setLoading(false);
+      return;
+    }
+console.log(user,'user');
 
     // await authClient.signUp.email({
     //   ...user,
@@ -30,39 +48,49 @@ export default function SignUpPage() {
     // redirect('/')
   };
 
+  const handleGoogleSignin = async () => {
+
+  }
+
   return (
-    <div className="flex items-center justify-center rounded-3xl bg-surface p-6 max-w-2xl mx-auto border mt-5">
-      <Surface className="w-full">
+   <div className="bg-cyan-900 py-8 ">
+     <div className="bg-gray-500 flex items-center justify-center rounded-3xl  p-6 max-w-2xl mx-auto border ">
+      <Surface className="w-full bg-gray-500">
         <Form onSubmit={onSubmit}>
           <Fieldset className="w-full">
-            <Fieldset.Legend>Signup</Fieldset.Legend>
-            <Description>Create your account</Description>
+            <Fieldset.Legend className="text-3xl font-bold text-center text-white">Signup</Fieldset.Legend>
+            <Description className="text-center font-bold text-white">Create your account</Description>
             <Fieldset.Group>
               <TextField isRequired name="name">
-                <Label>Name</Label>
-                <Input placeholder="John Doe" variant="secondary" />
+                <Label className="text-white">Full Name</Label>
+                <Input placeholder="You Name" variant="secondary" />
                 <FieldError />
               </TextField>
 
               <TextField name="image" type="url">
-                <Label>Image URL</Label>
+                <Label className="text-white">Image URL</Label>
                 <Input placeholder="Image URL" variant="secondary" />
                 <FieldError />
               </TextField>
               <TextField isRequired name="email" type="email">
-                <Label>Email</Label>
-                <Input placeholder="john@example.com" variant="secondary" />
+                <Label className="text-white">Email</Label>
+                <Input placeholder="Your Email" variant="secondary" />
                 <FieldError />
               </TextField>
 
               <TextField isRequired name="password" type="password">
-                <Label>Password</Label>
+                <Label className="text-white">Password</Label>
                 <Input placeholder="Password" variant="secondary" />
+                <FieldError />
+              </TextField>
+              <TextField isRequired name="confirmPassword" type="password">
+                <Label className="text-white"> Confirm Password</Label>
+                <Input placeholder="Confirm Password" variant="secondary" />
                 <FieldError />
               </TextField>
 
               <Select isRequired name="role" placeholder="Select one">
-                <Label>Signup As</Label>
+                <Label className="text-white">Signup As</Label>
                 <Select.Trigger>
                   <Select.Value />
                   <Select.Indicator />
@@ -70,11 +98,11 @@ export default function SignUpPage() {
                 <Select.Popover>
                   <ListBox>
                     <ListBox.Item id="buyer" textValue="buyer">
-                      Buyer
+                      Reader
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
                     <ListBox.Item id="seller" textValue="seller">
-                      Seller
+                      Librarian
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
                   </ListBox>
@@ -82,12 +110,38 @@ export default function SignUpPage() {
               </Select>
             </Fieldset.Group>
 
-            <Button type="submit" className={"w-full"}>
-              Signup
+            <Button type="submit" className={"w-full bg-cyan-700"} disabled={loading}>
+               {loading ? "Registering..." : "Register"}
             </Button>
           </Fieldset>
         </Form>
+         {/* Divider */}
+          <div className="flex items-center gap-3 my-5">
+            <Separator className="flex-1" />
+            <div className="text-xs sm:text-sm whitespace-nowrap text-white">
+              Or continue with
+            </div>
+            <Separator className="flex-1" />
+          </div>
+           {/* Google */}
+          <Button
+          onClick={handleGoogleSignin}
+            variant="outline"
+            className="w-full rounded-[10px] hover:bg-green-100 flex items-center justify-center gap-2 text-white"
+          >
+            <FcGoogle /> Sign up with Google
+          </Button>
+            {/* Login Link */}
+          <p className="text-center mt-4 text-sm text-white">
+            Already have an account?{" "}
+            <Link href="/signin">
+              <span className="text-blue-400 cursor-pointer font-bold hover:underline text-xl">
+                SignIn
+              </span>
+            </Link>
+          </p>
       </Surface>
     </div>
+   </div>
   );
 }

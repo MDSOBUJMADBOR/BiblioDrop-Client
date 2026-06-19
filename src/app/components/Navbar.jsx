@@ -79,14 +79,14 @@ export default function Navbar() {
             </button>
 
             {dropdown && (
-              <div className="absolute  top-10  text-black bg-amber-400 rounded  p-2 w-44">
-                <Link href="/dashboard/profile" className="flex gap-2 p-2 hover:bg-gray-100 ">
+              <div className="absolute z-50  top-10  text-white  bg-[#0d244b] rounded  p-2 w-44">
+                <Link href="/dashboard/profile" className="flex gap-2 p-2 hover:bg-gray-300 hover:text-black">
                   <User size={16} /> Profile 
                 </Link>
-                <Link href="/dashboard/books" className="flex gap-2 p-2 hover:bg-gray-100">
+                <Link href="/dashboard/books" className="flex gap-2 p-2 hover:bg-gray-300 hover:text-black">
                   <Book size={16} /> Books
                 </Link>
-                <Link href="/dashboard/analytics" className="flex gap-2 p-2 hover:bg-gray-100">
+                <Link href="/dashboard/analytics" className="flex gap-2 p-2 hover:bg-gray-300 hover:text-black">
                   <BarChart size={16} /> Analytics
                 </Link>
               </div>
@@ -99,7 +99,7 @@ export default function Navbar() {
             
           </Button>
           <Button className="bg-yellow-400 text-black px-4 py-1 rounded flex items-center gap-2">
-           <Link href={'/signup'}><div className="flex gap-4"><LogOut size={16} /> Register</div></Link>          
+           <Link href={'/signup'}><div className="flex gap-4"><LogOut size={16} /> Register</div></Link>      
             
           </Button>
 
@@ -125,7 +125,7 @@ export default function Navbar() {
 
 
 <ul
-  className={` sm:hidden absolute top-12 left-0 w-full bg-[#31537c] shadow-md flex flex-col items-center gap-2 py-4 px-5 transition-all duration-300 ${
+  className={` sm:hidden z-50 absolute top-12 left-0 w-full bg-[#31537c] shadow-md flex flex-col items-center gap-2 py-4 px-5 transition-all duration-300 ${
     open ? "max-h-96 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
   }`}
 >

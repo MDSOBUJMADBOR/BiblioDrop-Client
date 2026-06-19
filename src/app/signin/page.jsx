@@ -1,12 +1,97 @@
+"use client";
+// import { authClient } from "@/lib/auth-client";
+import {
+  Button,
+  Description,
+  FieldError,
+  Fieldset,
+  Form,
+  Input,
+  Label,
+  Surface,
+  ListBox,
+  Select,
+  TextField,
+  Separator,
+} from "@heroui/react";
+import Link from "next/link";
+// import { redirect } from "next/navigation";
+import React, { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 
-import React from 'react';
+export default function SignInPage() {
+    const [loading, setLoading] = useState(false);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true)
+    const formData = new FormData(e.currentTarget);
+    const user = Object.fromEntries(formData.entries());
+console.log(user,'user');
+    // await authClient.signIn.email({
+    //   ...user,
+    //   callbackURL: "/",
+    // });
+  };
 
-const SigninPage = () => {
-    return (
-        <div>
-            signin page
-        </div>
-    );
-};
+    const handleGoogleSignin = async () => {
 
-export default SigninPage;
+  }
+
+  return (
+    <div className="bg-cyan-900 py-8 ">
+        <div className="bg-gray-500 flex items-center justify-center rounded-3xl p-6 max-w-2xl mx-auto border mt-5">
+      <Surface className="w-full bg-gray-500">
+        <Form onSubmit={onSubmit}>
+          <Fieldset className="w-full">
+            <Fieldset.Legend className="text-3xl font-bold text-center text-white">Signin</Fieldset.Legend>
+            <Description>Create your account</Description>
+            <Fieldset.Group>
+              <TextField isRequired name="email" type="email">
+                <Label className="text-white">Email</Label>
+                <Input placeholder="Your Email" variant="secondary" />
+                <FieldError />
+              </TextField>
+
+              <TextField isRequired name="password" type="password">
+                <Label className="text-white">Password</Label>
+                <Input placeholder="Password" variant="secondary" />
+                <FieldError />
+              </TextField>
+            </Fieldset.Group>
+
+            <Button type="submit" className={"w-full bg-cyan-700"}  disabled={loading}>
+               {loading ? "Signin..." : "Signin"}
+            </Button>
+          </Fieldset>
+        </Form>
+
+          {/* Divider */}
+                  <div className="flex items-center gap-3 my-5">
+                    <Separator className="flex-1" />
+                    <div className="text-xs sm:text-sm whitespace-nowrap text-white">
+                      Or continue with
+                    </div>
+                    <Separator className="flex-1" />
+                  </div>
+                   {/* Google */}
+                  <Button
+                  onClick={handleGoogleSignin}
+                    variant="outline"
+                    className="w-full rounded-[10px] hover:bg-green-100 flex items-center justify-center gap-2 text-white"
+                  >
+                    <FcGoogle /> Sign up with Google
+                  </Button>
+                    {/* Login Link */}
+                  <p className="text-center mt-4 text-sm text-white">
+                    Don't have an account?{" "}
+                    <Link href="/signup">
+                      <span className="text-blue-400 cursor-pointer font-bold hover:underline text-xl">
+                        Register
+                      </span>
+                    </Link>
+                  </p>
+      </Surface>
+    </div>
+    </div>
+  );
+}
