@@ -1,5 +1,5 @@
 "use client";
-// import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   Description,
@@ -17,7 +17,7 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-// import { redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 
 export default function SignUpPage() {
@@ -38,14 +38,14 @@ export default function SignUpPage() {
       setLoading(false);
       return;
     }
+
+
+    await authClient.signUp.email({
+      ...user,
+      
+    });
 console.log(user,'user');
-
-    // await authClient.signUp.email({
-    //   ...user,
-    //   plan: 'free',
-    // });
-
-    // redirect('/')
+    redirect('/')
   };
 
   const handleGoogleSignin = async () => {

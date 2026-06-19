@@ -20,7 +20,7 @@ export default function HeroBanner() {
 <Link href="/books"><button className="bg-blue-600 p-2 rounded-md mr-4 text-white cursor-pointer">Browse Books </button></Link>
 <button className="p-2 rounded-md bg-transparent border text-white cursor-pointer">Here it Works</button>
     </div>
-    <div className="flex-1">
+    <div className="flex-1"> 
   <Image
             src="/book.jpg"
             alt="book"

@@ -61,9 +61,9 @@ export default function Footer() {
 
         {/* Social Icons */}
         <div className="flex space-x-4 mt-3 md:mt-0">
-          <Link href="#"><LogoFacebook className="text-amber-400 border h-8 w-8 rounded-full p-0.5" /></Link>
-          <Link href="#"><LogoTelegram className="text-amber-400 border h-8 w-8 rounded-full p-0.5" /></Link>         
-          <Link href="#"><LogoGithub className="text-amber-400 border h-8 w-8 rounded-full p-0.5" /></Link>    
+          <Link href="#"><LogoFacebook className="text-blue-400  h-8 w-8 rounded-full p-0.5" /></Link>
+          <Link href="#"><LogoTelegram className="text-blue-400  h-8 w-8 rounded-full p-0.5" /></Link>         
+          <Link href="#"><LogoGithub className="text-black bg-white   h-8 w-8 rounded-full p-0.5 " /></Link>    
         </div>
       </div>
     </footer>

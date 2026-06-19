@@ -1,5 +1,5 @@
 "use client";
-// import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   Description,
@@ -15,7 +15,7 @@ import {
   Separator,
 } from "@heroui/react";
 import Link from "next/link";
-// import { redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 
@@ -27,10 +27,10 @@ export default function SignInPage() {
     const formData = new FormData(e.currentTarget);
     const user = Object.fromEntries(formData.entries());
 console.log(user,'user');
-    // await authClient.signIn.email({
-    //   ...user,
-    //   callbackURL: "/",
-    // });
+    await authClient.signIn.email({
+      ...user,
+      callbackURL: "/",
+    });
   };
 
     const handleGoogleSignin = async () => {
