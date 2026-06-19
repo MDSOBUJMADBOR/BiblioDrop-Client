@@ -38,7 +38,7 @@ console.log(user,'user');
   }
 
   return (
-    <div className="bg-cyan-900 py-8 ">
+    <div className="bg-cyan-900 min-h-screen flex items-center justify-center">
         <div className="bg-gray-500 flex items-center justify-center rounded-3xl p-6 max-w-2xl mx-auto border mt-5">
       <Surface className="w-full bg-gray-500">
         <Form onSubmit={onSubmit}>

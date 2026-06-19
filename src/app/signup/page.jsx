@@ -53,8 +53,8 @@ console.log(user,'user');
   }
 
   return (
-   <div className="bg-cyan-900 py-8 ">
-     <div className="bg-gray-500 flex items-center justify-center rounded-3xl  p-6 max-w-2xl mx-auto border ">
+   <div className="bg-cyan-900 min-h-screen flex items-center justify-center">
+     <div className="bg-gray-500 w-full max-w-lg   rounded-2xl  p-8  border ">
       <Surface className="w-full bg-gray-500">
         <Form onSubmit={onSubmit}>
           <Fieldset className="w-full">
@@ -97,11 +97,11 @@ console.log(user,'user');
                 </Select.Trigger>
                 <Select.Popover>
                   <ListBox>
-                    <ListBox.Item id="buyer" textValue="buyer">
+                    <ListBox.Item id="Reader" textValue="Reader">
                       Reader
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
-                    <ListBox.Item id="seller" textValue="seller">
+                    <ListBox.Item id="Librarian" textValue="Librarian">
                       Librarian
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
