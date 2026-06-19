@@ -79,7 +79,7 @@ export default function Navbar() {
             </button>
 
             {dropdown && (
-              <div className="absolute  top-10  text-white bg-amber-400 rounded  p-2 w-44">
+              <div className="absolute  top-10  text-black bg-amber-400 rounded  p-2 w-44">
                 <Link href="/dashboard/profile" className="flex gap-2 p-2 hover:bg-gray-100 ">
                   <User size={16} /> Profile 
                 </Link>
@@ -95,9 +95,14 @@ export default function Navbar() {
           </div>
 
           <Button className="bg-yellow-400 text-black px-4 py-1 rounded flex items-center gap-2">
-            <Link href={'/signin'}><div className="flex gap-4"><LogOut size={16} /> Login</div></Link>
+            <Link href={'/signin'}><div className="flex gap-4"><LogOut size={16} /> Login</div></Link>          
             
           </Button>
+          <Button className="bg-yellow-400 text-black px-4 py-1 rounded flex items-center gap-2">
+           <Link href={'/signup'}><div className="flex gap-4"><LogOut size={16} /> Register</div></Link>          
+            
+          </Button>
+
         </div>
 
 
