@@ -19,9 +19,9 @@ import { Button } from "@heroui/react";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 
-const toggleMenu = () => {
-  setOpen(prev => !prev); 
-};
+// const toggleMenu = () => {
+//   setOpen(prev => !prev); 
+// };
 
 const navItems = [
  {
@@ -32,21 +32,21 @@ text: "Home"
 path: "/books",
 text: "Browse Books"
  },
- {
-path: "/profile",
-text: "Profile"
- },
- {
-path: "/profile",
-text: "Books"
- },
- {
-path: "/profile",
-text: "Analytics"
- },
+//  {
+// path: "/Dashboard",
+// text: "Profile"
+//  },
+//  {
+// path: "/profile",
+// text: "Books"
+//  },
+//  {
+// path: "/profile",
+// text: "Analytics"
+//  },
 
 ]
-
+// bg-gradient-to-r from-[#0b1d3a] to-[#0f2a5c]
 export default function Navbar() {
   const userData = authClient.useSession();
 const user = userData.data?.user; 
@@ -61,7 +61,8 @@ await authClient.signOut();
 
 }
   return (
-    <nav className="bg-gradient-to-r from-[#0b1d3a] to-[#0f2a5c] text-white">
+// bg-gradient-to-r from-[#0b1d3a] to-[#0f2a5c]
+    <nav className="bg-[#0b1d3a] text-white">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
 
         {/* Logo */}
@@ -80,9 +81,9 @@ await authClient.signOut();
 
 
           {/* Dropdown */}
-          {user && <div className="relative">
+          {/* {user && <div className="relative">
             <button onClick={() => setDropdown(!dropdown)}>
-             <div className="flex bg-black"> Dashboard {!dropdown ? <ChevronRight /> :  <ChevronDown /> } </div>
+             <div className="flex "> Dashboard  {!dropdown ? <ChevronRight /> :  <ChevronDown /> } </div>
             </button>
 
             {dropdown && (
@@ -96,16 +97,85 @@ await authClient.signOut();
                 <Link href="/dashboard/analytics" className="flex gap-2 p-2 hover:bg-gray-300 hover:text-black">
                  <div className="flex items-center gap-2"> <BarChart size={16} /> Analytics </div>
                 </Link>
-                <Link href="/dashboard/analytics" onClick={handleSignOut} className="flex gap-2 p-2 bg-red-500 rounded-lg mt-3">
-                  <div className="flex items-center gap-2"><LogOut size={16} /> LogOut  </div>
-                </Link>
+              
               </div>
              
             )}
-          </div>}
+          </div>} */}
 
 
-         {!user && (<div>
+
+{user && (
+  <div className="relative">
+    <button onClick={() => setDropdown(!dropdown)}>
+      <div className="flex items-center gap-2">
+
+        {/* User Image */}
+        <Image
+          src={user?.image || "/default-user.png"}
+          alt="user"
+          width={32}
+          height={32}
+          className="rounded-full object-cover border"
+        />
+
+        {/* Dashboard Text */}
+        <span>Dashboard</span>
+
+        {/* Icon */}
+        {!dropdown ? <ChevronRight /> : <ChevronDown />}
+      </div>
+    </button>
+
+    {dropdown && (
+      <div className="absolute z-50 top-10 text-white bg-[#0d244b] rounded p-1 w-44">
+        <Link href="/" className=" gap-2  hover:bg-gray-300 ">
+          <div className="">
+            <div className="flex items-center gap-2">
+               <Image
+          src={user?.image || "/default-user.png"}
+          alt="user"
+          width={20}
+          height={20}
+          className="rounded-full object-cover border"
+        />
+              <p>{user?.name}</p>
+              </div>   
+             <p className="text-[10px]">{user?.email}</p>            
+          </div>
+         
+        </Link>
+        <Link href="/dashboard" className="flex gap-2 p-1 mt-1 hover:bg-gray-300 hover:text-black">
+          <div className="flex items-center gap-2">
+           <LayoutDashboard size={16} /> Dashboard
+          </div>
+        </Link>
+
+        <Link href="/dashboard/books" className="flex gap-2 p-1 mt-1 hover:bg-gray-300 hover:text-black">
+          <div className="flex items-center gap-2">
+             <User size={16} /> Profile
+          </div>
+        </Link>
+
+        {/* <Link href="/dashboard/analytics" className="flex gap-1 p-2 mt-1 hover:bg-gray-300 hover:text-black">
+          <div className="flex items-center gap-2">
+            <BarChart size={16} /> Analytics
+          </div>
+        </Link> */}
+      </div>
+    )}
+  </div>
+)}
+
+
+            { user && <div>
+                <Link href="/dashboard/analytics" onClick={handleSignOut} className="flex gap-2 p-1 px-3 bg-red-500 rounded-md ">
+                  <div className="flex items-center gap-2"><LogOut size={16} /> LogOut  </div>
+                </Link>
+            </div>              
+            }
+
+         {!user && (<div className="flex flex-row gap-4">
            <Button className="bg-yellow-400 text-black px-4 py-1 rounded flex items-center gap-2">
             <Link href={'/signin'}><div className="flex gap-4"><LogOut size={16} /> Login</div></Link>  
           </Button>
@@ -128,7 +198,7 @@ await authClient.signOut();
 
  <div onClick={() => setOpen(!open)} className="dropdown dropdown-center sm:hidden ">
   
-  <div onClick={toggleMenu} className="md:hidden cursor-pointer">
+  <div  className="md:hidden cursor-pointer">
   {open ? <X className="text-white" /> : <Menu className="text-white" />}
 </div>        
       </div>
@@ -173,7 +243,18 @@ await authClient.signOut();
               <Button onClick={handleSignOut} size="sm" variant="danger">LoginOut</Button>
             </li>
 } */}
-<li>login</li>
+{!user && <div className="flex flex-col w-full gap-2">
+  <li className="w-full"><Link onClick={() => setOpen(false)} className="block w-full  border rounded-md text-center py-3 " href={'/signin'}>Login</Link></li>
+<li className="w-full"><Link onClick={() => setOpen(false)} className="block w-full  border rounded-md text-center py-3 " href={'/signup'}>Register</Link></li>
+</div> }
+
+{user && <div className="flex flex-col w-full gap-2">
+  <li className="w-full"><Link onClick={() => setOpen(false)} className="block w-full  border rounded-md text-center py-3 " href={'/dashboard'}><div className="flex items-center justify-center gap-2"> <LayoutDashboard size={16} /> Dashboard </div></Link></li>
+<li className="w-full "><Link onClick={() => setOpen(false)} className="block w-full  border rounded-md text-center py-3 " href={'/profile'}><div className="flex items-center justify-center gap-2">  <User size={16} /> Profile  </div></Link></li>
+<li className="w-full bg-red-600 "><Link  onClick={handleSignOut} className="block w-full  border rounded-md text-center py-3 " href={'/'}><div className="flex items-center justify-center gap-2"><LogOut size={16} /> LogOut  </div></Link></li>
+</div> }
+
+
   </ul>
 
   
