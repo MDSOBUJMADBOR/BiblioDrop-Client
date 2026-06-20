@@ -22,6 +22,7 @@ import { redirect } from "next/navigation";
 
 export default function SignUpPage() {
    const [loading, setLoading] = useState(false);
+   const [role, setRole] = useState(["Reader"]);
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -42,7 +43,7 @@ export default function SignUpPage() {
 
     await authClient.signUp.email({
       ...user,
-      
+     role,
     });
 console.log(user,'user');
     redirect('/')
@@ -89,7 +90,7 @@ console.log(user,'user');
                 <FieldError />
               </TextField>
 
-              <Select isRequired name="role" placeholder="Select one">
+              <Select isRequired  name="role" onSelectionChange={setRole} placeholder="Select one">
                 <Label className="text-white">Signup As</Label>
                 <Select.Trigger>
                   <Select.Value />

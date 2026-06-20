@@ -1,8 +1,14 @@
+'use client'
 import Link from "next/link";
 import {LogoFacebook,LogoGithub} from '@gravity-ui/icons';
 import {LogoTelegram} from '@gravity-ui/icons';
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+   const pathname = usePathname();
+   if(pathname.includes('dashboard')){
+    return null;
+   }
   return (
     <footer className="bg-gray-900 text-gray-300">
       <div className="max-w-7xl mx-auto px-6 py-10 grid md:grid-cols-4 gap-8">

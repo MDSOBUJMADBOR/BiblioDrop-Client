@@ -52,6 +52,9 @@ export default function Navbar() {
 const user = userData.data?.user; 
 console.log(user,'user');
   const pathname = usePathname();
+ if(pathname.includes('dashboard')){
+  return null;
+ }
   const [open, setOpen] = useState(false);
   const [dropdown, setDropdown] = useState(false); 
 
@@ -145,7 +148,7 @@ await authClient.signOut();
           </div>
          
         </Link>
-        <Link href="/dashboard" className="flex gap-2 p-1 mt-1 hover:bg-gray-300 hover:text-black">
+        <Link href="/dashboard/readers" className="flex gap-2 p-1 mt-1 hover:bg-gray-300 hover:text-black">
           <div className="flex items-center gap-2">
            <LayoutDashboard size={16} /> Dashboard
           </div>
