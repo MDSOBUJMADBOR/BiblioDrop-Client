@@ -1,10 +1,13 @@
+import Link from 'next/link';
 import React from 'react';
 
 const DashboardNavbar = () => {
     return (
-        <div className='border border-b-1 p-2 lg:p-4 w-full'>
-            DashboardNavbar
+        <Link href={'/'}>
+        <div className=' text-2xl font-bold text-white  border-b-1 p-2 lg:p-4 w-full bg-blue-950'>
+            BiblioDrop 
         </div>
+        </Link>
     );
 };
 

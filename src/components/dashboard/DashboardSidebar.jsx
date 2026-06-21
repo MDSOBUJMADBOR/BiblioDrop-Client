@@ -33,25 +33,25 @@ export default function DashboardSidebar() {
         key: "overview",
         label: "Overview",
         icon: Person,
-        href: "/dashboard/organizer",
+        href: "/dashboard/readers/overview",
       },
       {
         key: "delivery-history",
         label: "Delivery History",
         icon: House,
-        href: "/dashboard/organizer/organization",
+        href: "/dashboard/readers/deliveryhistory",
       },
       {
         key: "my-reading-list",
         label: "My Reading List",
         icon: Plus,
-        href: "/dashboard/organizer/add-event",
+        href: "/dashboard/readers/myreadinglist",
       },
       {
         key: "my-reviews",
         label: "My Reviews",
         icon: Calendar,
-        href: "/dashboard/organizer/manage-events",
+        href: "/dashboard/overview/manage-events",
       },
     ],
 
@@ -201,7 +201,7 @@ export default function DashboardSidebar() {
   return (
     <>
       {/* Desktop */}
-      <aside className="hidden lg:flex flex-col w-64 h-screen border-r border-white/10">
+      <aside className="hidden lg:flex flex-col w-64 h-screen  border-white/10">
         {SidebarContent}
       </aside>
 

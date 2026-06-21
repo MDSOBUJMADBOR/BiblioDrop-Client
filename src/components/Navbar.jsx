@@ -19,9 +19,6 @@ import { Button } from "@heroui/react";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 
-// const toggleMenu = () => {
-//   setOpen(prev => !prev); 
-// };
 
 const navItems = [
  {
@@ -32,19 +29,6 @@ text: "Home"
 path: "/books",
 text: "Browse Books"
  },
-//  {
-// path: "/Dashboard",
-// text: "Profile"
-//  },
-//  {
-// path: "/profile",
-// text: "Books"
-//  },
-//  {
-// path: "/profile",
-// text: "Analytics"
-//  },
-
 ]
 // bg-gradient-to-r from-[#0b1d3a] to-[#0f2a5c]
 export default function Navbar() {
@@ -52,12 +36,14 @@ export default function Navbar() {
 const user = userData.data?.user; 
 console.log(user,'user');
   const pathname = usePathname();
- if(pathname.includes('dashboard')){
-  return null;
- }
+
   const [open, setOpen] = useState(false);
   const [dropdown, setDropdown] = useState(false); 
 
+   if(pathname.includes('dashboard')){
+  return null;
+ }
+  
   const isActive = (path) => pathname === path;
 const handleSignOut = async () => {
 await authClient.signOut();
@@ -77,34 +63,6 @@ await authClient.signOut();
         <div className="hidden md:flex gap-6 items-center">
           <Link href="/" className={isActive("/") ? "text-yellow-400" : ""}>Home</Link>
           <Link href="/books" className={isActive("/books") ? "text-yellow-400" : ""}>Browse Books</Link>
-
-
-
-
-
-
-          {/* Dropdown */}
-          {/* {user && <div className="relative">
-            <button onClick={() => setDropdown(!dropdown)}>
-             <div className="flex "> Dashboard  {!dropdown ? <ChevronRight /> :  <ChevronDown /> } </div>
-            </button>
-
-            {dropdown && (
-              <div className="absolute z-50  top-10  text-white  bg-[#0d244b] rounded  p-2 w-44">
-                <Link href="/dashboard/profile" className="flex gap-2 p-2 hover:bg-gray-300 hover:text-black">
-                 <div className="flex items-center gap-2"> <User size={16} /> Profile </div>
-                </Link>
-                <Link href="/dashboard/books" className="flex gap-2 p-2 hover:bg-gray-300 hover:text-black">
-                  <div className="flex items-center gap-2"><Book size={16} /> Books</div>
-                </Link>
-                <Link href="/dashboard/analytics" className="flex gap-2 p-2 hover:bg-gray-300 hover:text-black">
-                 <div className="flex items-center gap-2"> <BarChart size={16} /> Analytics </div>
-                </Link>
-              
-              </div>
-             
-            )}
-          </div>} */}
 
 
 
@@ -160,11 +118,6 @@ await authClient.signOut();
           </div>
         </Link>
 
-        {/* <Link href="/dashboard/analytics" className="flex gap-1 p-2 mt-1 hover:bg-gray-300 hover:text-black">
-          <div className="flex items-center gap-2">
-            <BarChart size={16} /> Analytics
-          </div>
-        </Link> */}
       </div>
     )}
   </div>
@@ -172,7 +125,7 @@ await authClient.signOut();
 
 
             { user && <div>
-                <Link href="/dashboard/analytics" onClick={handleSignOut} className="flex gap-2 p-1 px-3 bg-red-500 rounded-md ">
+                <Link href="/" onClick={handleSignOut} className="flex gap-2 p-1 px-3 bg-red-500 rounded-md ">
                   <div className="flex items-center gap-2"><LogOut size={16} /> LogOut  </div>
                 </Link>
             </div>              
@@ -189,13 +142,6 @@ await authClient.signOut();
         
 
         </div>
-
-
-
-
-
-
-
 
         {/* Mobile Button */}   
 
@@ -225,27 +171,7 @@ await authClient.signOut();
       </Link>
     </li>
   ))}
-{/* {!user && <li className="w-full px-4">
-    <Link
-      href="/login"
-      className="block w-full py-2 text-center rounded-lg transition-all duration-300 ease-in-out hover:bg-[#3cd86b] text-white"
-    >
-      <Button className="text-lg " variant="light">Login</Button>
-    </Link>
-  </li>}
-{user && <li className="flex gap-3">
-              <Avatar size="sm">
-                <Avatar.Image
-                  alt="John Doe"
-                  src={user?.image}
-                  referrerPolicy="no-referrer"
-                />
-                <Avatar.Fallback>{user?.name.charAt(0)}</Avatar.Fallback> 
-              </Avatar>
 
-              <Button onClick={handleSignOut} size="sm" variant="danger">LoginOut</Button>
-            </li>
-} */}
 {!user && <div className="flex flex-col w-full gap-2">
   <li className="w-full"><Link onClick={() => setOpen(false)} className="block w-full  border rounded-md text-center py-3 " href={'/signin'}>Login</Link></li>
 <li className="w-full"><Link onClick={() => setOpen(false)} className="block w-full  border rounded-md text-center py-3 " href={'/signup'}>Register</Link></li>

@@ -1,11 +1,10 @@
-import React from 'react';
+import { permanentRedirect } from 'next/navigation';
+
 
 const ReadersDashboardPage = () => {
-    return (
-        <div className='bg-amber-200 w-full'>
-            ReadersDashboardPage
-        </div>
-    );
+  
+         permanentRedirect('/dashboard/readers/overview');
+    
 };
 
 export default ReadersDashboardPage;

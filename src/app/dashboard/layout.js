@@ -6,7 +6,7 @@ import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 
 export default function DashboardLayout({ children }) {
   return (
-   <div className="flex h-screen ">
+   <div className="flex min-h-screen ">
         <div className="flex flex-1 overflow-hidden">
             {/* sidebar */}
             <DashboardSidebar></DashboardSidebar>
@@ -19,6 +19,7 @@ export default function DashboardLayout({ children }) {
             <main className="p-1"> 
                 
                 {children} </main>
+                {/* <h1 className="bg-green-400 flex flex-row">Footer</h1> */}
         </div>
         </div>
    </div>
