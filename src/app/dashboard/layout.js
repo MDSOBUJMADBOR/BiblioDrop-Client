@@ -1,5 +1,6 @@
 import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
-import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
+import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
+;
 
 
 
