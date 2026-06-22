@@ -15,7 +15,6 @@ import {
   Separator,
 } from "@heroui/react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 
@@ -26,16 +25,31 @@ export default function SignInPage() {
     setLoading(true)
     const formData = new FormData(e.currentTarget);
     const user = Object.fromEntries(formData.entries());
-console.log(user,'user');
-    await authClient.signIn.email({
-      ...user,
-      callbackURL: "/",
-    });
+    
+ try {
+      await authClient.signIn.email({
+        ...user,
+        callbackURL: "/",
+      });
+    } catch (error) {
+      alert("❌ Email or password is incorrect!");
+      console.log("Login error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-    const handleGoogleSignin = async () => {
-
-  }
+  const handleGoogleSignin = async () => {
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+    } catch (error) {
+      alert("Google login failed!");
+      console.log(error);
+    }
+  };
 
   return (
     <div className="bg-cyan-900 min-h-screen flex items-center justify-center">

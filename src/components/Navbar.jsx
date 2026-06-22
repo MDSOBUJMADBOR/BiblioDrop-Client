@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { Button } from "@heroui/react";
 import Image from "next/image";
-import { authClient } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 
 
 const navItems = [
@@ -32,6 +32,10 @@ text: "Browse Books"
 ]
 // bg-gradient-to-r from-[#0b1d3a] to-[#0f2a5c]
 export default function Navbar() {
+const { data: session } = useSession(); 
+  const role = session?.user?.role;
+console.log(role,'role');
+
   const userData = authClient.useSession();
 const user = userData.data?.user; 
 console.log(user,'user');
@@ -102,11 +106,12 @@ await authClient.signOut();
         />
               <p>{user?.name}</p>
               </div>   
-             <p className="text-[10px]">{user?.email}</p>            
+             <p className="text-[10px]">{user?.email}</p> 
+             <p className="text-[10px]">{role}</p>           
           </div>
          
         </Link>
-        <Link href="/dashboard/readers" className="flex gap-2 p-1 mt-1 hover:bg-gray-300 hover:text-black">
+        <Link href={`/dashboard/${role}/overview`} className="flex gap-2 p-1 mt-1 hover:bg-gray-300 hover:text-black">
           <div className="flex items-center gap-2">
            <LayoutDashboard size={16} /> Dashboard
           </div>
@@ -178,7 +183,7 @@ await authClient.signOut();
 </div> }
 
 {user && <div className="flex flex-col w-full gap-2">
-  <li className="w-full"><Link onClick={() => setOpen(false)} className="block w-full  border rounded-md text-center py-3 " href={'/dashboard'}><div className="flex items-center justify-center gap-2"> <LayoutDashboard size={16} /> Dashboard </div></Link></li>
+  <li className="w-full"><Link onClick={() => setOpen(false)} className="block w-full  border rounded-md text-center py-3 " href={`/dashboard/${role}/overview`}><div className="flex items-center justify-center gap-2"> <LayoutDashboard size={16} /> Dashboard </div></Link></li>
 <li className="w-full "><Link onClick={() => setOpen(false)} className="block w-full  border rounded-md text-center py-3 " href={'/profile'}><div className="flex items-center justify-center gap-2">  <User size={16} /> Profile  </div></Link></li>
 <li className="w-full bg-red-600 "><Link  onClick={handleSignOut} className="block w-full  border rounded-md text-center py-3 " href={'/'}><div className="flex items-center justify-center gap-2"><LogOut size={16} /> LogOut  </div></Link></li>
 </div> }
