@@ -106,7 +106,7 @@ await authClient.signOut();
         />
               <p>{user?.name}</p>
               </div>   
-             <p className="text-[10px]">{user?.email}</p> 
+             <p className="text-[10px]">{user?.email}</p>  
              <p className="text-[10px]">{role}</p>           
           </div>
          

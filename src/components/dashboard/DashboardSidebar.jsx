@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 import {
   House,
   Magnifier,
@@ -17,7 +17,7 @@ import {
 import { Button, Drawer } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { FaSignOutAlt } from "react-icons/fa";
 
 export default function DashboardSidebar() {
@@ -87,39 +87,40 @@ export default function DashboardSidebar() {
         key: "overview",
         label: "Overview",
         icon: Circle,
-        href: "/dashboard/users",
+        href: "/dashboard/admin/overview",
       },
       {
         key: "book-approval-queue",
         label: "Book Approval Queue",
         icon: Circle,
-        href: "/dashboard/events",
+        href: "/dashboard/admin/bookapprovalqueue",
       },
       {
         key: "manage-users",
         label: "Manage Users",
         icon: Circle,
-        href: "/dashboard/transactions",
+        href: "/dashboard/admin/manageusers",
       },
       {
         key: "manage-all-books",
         label: "Manage All Books",
         icon: Circle,
-        href: "/dashboard/transactions",
+        href: "/dashboard/admin/manageallbooks",
       },
       {
         key: "view-all-transactions",
         label: "View All Transactions",
         icon: Circle,
-        href: "/dashboard/transactions",
+        href: "/dashboard/admin/viewalltransactions", 
       },
     ],
   };
 
   const navItems = menus[role] || [];
 
-  const handleLogout = () => {
-    console.log("logout"); // auth logout here
+  const handleLogout =async () => {
+   await authClient.signOut();
+   redirect('/')
   };
 
   // 🔥 Sidebar Content
@@ -189,7 +190,7 @@ export default function DashboardSidebar() {
 
         <button
           onClick={handleLogout}
-          className="flex w-full items-center gap-3 px-3 py-2 rounded-lg text-gray-400 text-white bg-red-500"
+          className="flex w-full items-center gap-3 px-3 py-2 rounded-lg cursor-pointer text-white bg-red-500"
         >
           <FaSignOutAlt />
           Logout
