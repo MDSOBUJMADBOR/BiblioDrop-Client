@@ -3,10 +3,6 @@
 import { authClient, useSession } from "@/lib/auth-client";
 import {
   House,
-  Magnifier,
-  Bell,
-  Briefcase,
-  Envelope,
   Person,
   Plus,
   Calendar,
