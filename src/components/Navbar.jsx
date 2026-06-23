@@ -36,13 +36,13 @@ const { data: session } = useSession();
   const role = session?.user?.role;
 console.log(role,'role');
 
-  const userData = authClient.useSession();
-const user = userData.data?.user; 
+  const userData = authClient.useSession(); 
+const user = userData.data?.user;  
 console.log(user,'user');
   const pathname = usePathname();
 
   const [open, setOpen] = useState(false);
-  const [dropdown, setDropdown] = useState(false); 
+  const [dropdown, setDropdown] = useState(false);  
 
    if(pathname.includes('dashboard')){
   return null;

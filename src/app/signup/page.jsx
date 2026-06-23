@@ -22,12 +22,12 @@ import { redirect } from "next/navigation";
 
 export default function SignUpPage() {
    const [loading, setLoading] = useState(false);
-   const [role, setRole] = useState(["reader"]);
+   const [role, setRole] = useState(["reader"]); 
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.currentTarget);
-    const user = Object.fromEntries(formData.entries());
+    const user = Object.fromEntries(formData.entries());  
 
 
  const password = user.password;
@@ -44,6 +44,7 @@ export default function SignUpPage() {
     await authClient.signUp.email({
       ...user,
      role,
+     plan: 'free'
     });
 console.log(user,'user singup');
     redirect('/')

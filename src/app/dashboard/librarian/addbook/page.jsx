@@ -1,5 +1,6 @@
 'use client';
 
+import { authClient } from "@/lib/auth-client";
 import { 
   Form, 
   Input, 
@@ -9,22 +10,111 @@ import {
   Label,       
   ListBox,
 } from "@heroui/react";
+import Image from "next/image";
+import { useState } from "react";
+
+
 
 export default function AddBookForm() {
+const [imageUrl, setImageUrl] = useState("");
+const [isUploading, setIsUploading] = useState(false);
+const [error, setError] = useState("");
+  const userData = authClient.useSession(); 
+  const user = userData.data?.user; 
+
+const handleImageUpload = async (e) => {
+   
+  console.log(user,'user');
+  const file = e.target.files[0];
+  if (!file) return;
+
+  // validation
+  if (file.size > 15 * 1024 * 1024) {
+    setError("Max file size 15MB");
+    return;
+  }
+
+  setIsUploading(true);
+  setError("");
+
+  const formData = new FormData();
+  formData.append("image", file);
+
+  try {
+    const API_KEY = process.env.NEXT_PUBLIC_IMGBB_KEY;
+
+    const res = await fetch(
+      `https://api.imgbb.com/1/upload?key=${API_KEY}`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    const data = await res.json();
+console.log(data);
+    if (data.success) {
+      setImageUrl(data.data.url);
+    } else {
+      setError("Upload failed");
+    }
+  } catch (err) {
+    setError("Network error");
+  } finally {
+    setIsUploading(false);
+  }
+};
 
 
- const handleSubmit = async (e) => {
-     e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-     // ফর্মের সব ডাটা একসাথে নেওয়ার জন্য FormData API ব্যবহার
-    const formData = new FormData(e.currentTarget);
-    const allData = Object.fromEntries(formData.entries());
-    
-    // কনসোলে সব ডাটা অবজেক্ট আকারে প্রিন্ট হবে
-    console.log("Submitted Book Data:", allData);
+  const form = e.currentTarget;
+  const formData = new FormData(form);
 
- }
+  if (!imageUrl) {
+    alert("Please upload image first");
+    return;
+  }
 
+  const bookData = {
+    title: formData.get("title"),
+    author: formData.get("author"),
+    category: formData.get("category"),
+    deliveryFee: formData.get("deliveryFee"),
+    email:user.email,
+    description: formData.get("description"),
+    image: imageUrl,
+    createdAt: new Date(),
+    status: "pending",
+  };
+// console.log(bookData);
+  try {
+    const res = await fetch("http://localhost:8080/bookpost", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(bookData),
+});
+
+    const data = await res.json();
+console.log(data);
+    if (data.acknowledged) {
+      alert("Book added successfully ✅");
+
+      // ✅ FORM RESET
+      form.reset();
+      setImageUrl("");
+      setError("");
+    } else {
+      alert("Failed to save ❌");
+    }
+  } catch (err) {
+    console.log(err);
+    alert("Something went wrong");
+  }
+};
 
 
 
@@ -122,16 +212,51 @@ export default function AddBookForm() {
 
 
           {/* Book Image Upload Card */}
-          <div className="flex flex-col">
-            <Label className={baseLabel}>Book Image</Label>
-            <div className="flex-1 border-2 border-dashed border-gray-200 rounded-xl flex flex-col items-center justify-center p-4 bg-gray-50/50 cursor-pointer hover:bg-gray-50 transition-all min-h-[110px]">
-              <svg className="w-5 h-5 text-gray-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 11l7-7 7 7M12 4v16" />
-              </svg>
-              <span className="text-sm font-semibold text-gray-700">Upload Image</span>
-              <span className="text-xs text-gray-400 mt-0.5">(Use imgBB API)</span>
-            </div>
-          </div>
+         
+<div className="flex flex-col gap-2">
+  <Label className={baseLabel}>Book Image</Label>
+
+  <div className="flex items-center gap-4">
+    
+    <label className="w-20 h-20 border border-dashed border-gray-300 rounded-xl flex items-center justify-center cursor-pointer overflow-hidden hover:border-green-500 transition">
+      
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleImageUpload}
+        className="hidden"
+      />
+
+      {imageUrl ? (
+      
+        <Image
+  src={imageUrl}
+  alt="preview"
+  width={80}
+  height={80}
+  className="object-cover rounded"
+/>
+      ) : (
+        <span className="text-gray-400 text-xs">Upload</span>
+      )}
+    </label>
+
+    <div className="flex flex-col">
+      <span className="text-sm text-gray-700 font-medium">
+        {isUploading ? "Uploading..." : "Upload Image"}
+      </span>
+      <span className="text-xs text-gray-400">
+        PNG, JPG up to 15MB
+      </span>
+
+      {error && (
+        <span className="text-xs text-red-500 mt-1">{error}</span>
+      )}
+    </div>
+  </div>
+</div>
+
+
         </div>
 
 
