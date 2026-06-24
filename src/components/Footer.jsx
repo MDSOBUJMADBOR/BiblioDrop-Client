@@ -69,7 +69,7 @@ export default function Footer() {
               </div>
               <div className="text-sm font-medium leading-relaxed max-w-sm">
                 <p className="text-indigo-400 mb-2">Your Local Library, Delivered.</p>
-                <p className="text-slate-400">Connecting readers with books and libraries.</p>
+                <p className="text-slate-400">Connecting user with books and libraries.</p>
               </div>
               
               {/* Social Media Buttons using Gravity Components */}

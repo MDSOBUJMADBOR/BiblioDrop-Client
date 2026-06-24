@@ -24,30 +24,30 @@ export default function DashboardSidebar() {
 
   // 🔥 Role-based menu
   const menus = {
-    reader: [
+    user: [
       {
         key: "overview",
         label: "Overview",
         icon: Person,
-        href: "/dashboard/reader/overview",
+        href: "/dashboard/user/overview",
       },
       {
         key: "delivery-history",
         label: "Delivery History",
         icon: House,
-        href: "/dashboard/reader/deliveryhistory",
+        href: "/dashboard/user/deliveryhistory",
       },
       {
         key: "my-reading-list",
         label: "My Reading List",
         icon: Plus,
-        href: "/dashboard/reader/myreadinglist",
+        href: "/dashboard/user/myreadinglist",
       },
       {
         key: "my-reviews",
         label: "My Reviews",
         icon: Calendar,
-        href: "/dashboard/reader/myreviews",
+        href: "/dashboard/user/myreviews",
       },
     ],
 

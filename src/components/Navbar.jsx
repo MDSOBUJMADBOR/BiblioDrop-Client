@@ -192,7 +192,7 @@ await authClient.signOut();
   </ul>
 
   
-</div>
+</div> 
 
 
     </nav>

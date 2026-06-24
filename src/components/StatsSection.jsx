@@ -6,7 +6,7 @@ export default function StatsSection() {
   const stats = [
     {
       value: "10K+",
-      label: "Happy Readers",
+      label: "Happy users",
     },
     {
       value: "500+",

@@ -35,30 +35,18 @@ const ManageInventory = () => {
   }, [user]);
 
   // ✅ status color
+  // const getStatusColor = (status) => {
+  //   if (status === "Published") return "bg-green-500 text-white";
+  //   if (status === "Unpublished") return "bg-red-500 text-white";
+  //   return "bg-yellow-500 text-white";
+  // };
   const getStatusColor = (status) => {
-    if (status === "Published") return "bg-green-500 text-white";
-    if (status === "Unpublished") return "bg-red-500 text-white";
-    return "bg-yellow-500 text-white";
-  };
+  if (status === "approved") return "bg-green-500 text-white";
+  if (status === "rejected") return "bg-red-500 text-white";
+  return "bg-yellow-500 text-white"; // pending
+};
 
-  // ✅ delete
-//   const handleDelete = async (id) => {
-//     if (!confirm("Are you sure?")) return;
-
-//     try {
-//       const res = await fetch(
-//         `${process.env.NEXT_PUBLIC_API_URL}/bookpost/${id}`,
-//         { method: "DELETE" }
-//       );
-//       const data = await res.json();
-
-//       if (data.deletedCount > 0) {
-//         setBooks((prev) => prev.filter((b) => b._id !== id));
-//       }
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   };
+ 
 
   return (
     <div className="w-full">
@@ -88,13 +76,20 @@ const ManageInventory = () => {
                       <Table.Cell>${book.deliveryFee}</Table.Cell>
 
                       <Table.Cell>
-                        <span
+                        {/* <span
                           className={`px-3 py-1 rounded-full text-sm ${getStatusColor(
                             book.status
                           )}`}
                         >
                           {book.status || "Pending"}
-                        </span>
+                        </span> */}
+                        <span
+  className={`px-3 py-1 rounded-full text-sm ${getStatusColor(
+    book.status
+  )}`}
+>
+  {book.status || "Pending"}
+</span>
                       </Table.Cell>
 
                       <Table.Cell>
@@ -104,9 +99,7 @@ const ManageInventory = () => {
                             <Button  className="rounded-md">
                               <Eye size={14} />
                             </Button>
-                          </Link>
-
-                          
+                          </Link>                          
 
                              <EditModal book={book}></EditModal> 
                             <AddBookDelect user={book}></AddBookDelect>
@@ -154,13 +147,13 @@ const ManageInventory = () => {
 
               <p className="mt-2">
                 Status:{" "}
-                <span
-                  className={`px-2 py-1 rounded text-sm ${getStatusColor(
-                    book.status
-                  )}`}
-                >
-                  {book.status || "Pending"}
-                </span>
+              <span
+  className={`px-3 py-1 rounded-full text-sm ${getStatusColor(
+    book.status
+  )}`}
+>
+  {book.status || "Pending"}
+</span>
               </p>
 
               <div className="flex gap-2 mt-3">

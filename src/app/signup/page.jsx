@@ -22,7 +22,7 @@ import { redirect } from "next/navigation";
 
 export default function SignUpPage() {
    const [loading, setLoading] = useState(false);
-   const [role, setRole] = useState(["reader"]); 
+   const [role, setRole] = useState(["user"]); 
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -99,8 +99,8 @@ console.log(user,'user singup');
                 </Select.Trigger>
                 <Select.Popover>
                   <ListBox>
-                    <ListBox.Item id="reader" textValue="reader">
-                      Reader
+                    <ListBox.Item id="user" textValue="user">
+                      User
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
                     <ListBox.Item id="librarian" textValue="librarian">
