@@ -3,7 +3,7 @@ import React from 'react';
 const ManageDeliveries = () => {
     return (
         <div>
-            ManageDeliveries
+            ManageDeliveries 
         </div>
     );
 };

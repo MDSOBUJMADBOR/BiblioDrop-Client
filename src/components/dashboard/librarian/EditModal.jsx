@@ -12,6 +12,7 @@ import {
   TextField,
 } from "@heroui/react";
 import { SquarePen } from "lucide-react";
+import { redirect } from "next/navigation";
 
 const EditModal = ({ book }) => {
 // console.log(book,'book');
@@ -41,7 +42,7 @@ const data = await res.json();
   } else {
     alert("No changes detected ⚠️");
   }
-
+redirect('/dashboard/librarian/overview')
 }
 
 

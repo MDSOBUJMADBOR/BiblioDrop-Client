@@ -17,12 +17,12 @@ const ManageInventory = () => {
 
   // ✅ fetch books
   useEffect(() => {
-    const getBooks = async () => {
+    const getBooks = async () => { 
       if (!user?.email) return;
-
+// http://localhost:8080/bookpost/email/sathi@gmail.com
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/bookpost?email=${user.email}`
+          `${process.env.NEXT_PUBLIC_API_URL}/bookpost/email/${user.email}`
         );
         const data = await res.json();
         setBooks(data);
@@ -99,19 +99,14 @@ const ManageInventory = () => {
 
                       <Table.Cell>
                         <div className="flex gap-2">
-
-                          <Link href={`/book/${book._id}`}>
-                            <Button size="sm">
+                          {/* // books/${book._id} */}
+                          <Link href={`/books`}>
+                            <Button  className="rounded-md">
                               <Eye size={14} />
                             </Button>
                           </Link>
 
-                          {/* <Link href={`/dashboard/edit-book/${book._id}`}>
-                            <Button size="sm" color="primary">
-                              
-                              
-                            </Button>
-                          </Link> */}
+                          
 
                              <EditModal book={book}></EditModal> 
                             <AddBookDelect user={book}></AddBookDelect>
@@ -170,20 +165,13 @@ const ManageInventory = () => {
 
               <div className="flex gap-2 mt-3">
                 <Link href={`/book/${book._id}`}>
-                  <Button size="sm">
+                  <Button  className="rounded-md">
                     <Eye size={14} />
                   </Button>
                 </Link>
 
                <EditModal book={book}></EditModal>
-
-                <Button
-                  size="sm"
-                  color="danger"
-                 
-                >
-                  <Trash size={14} />
-                </Button>
+              <AddBookDelect user={book}></AddBookDelect>
               </div>
             </div>
           ))

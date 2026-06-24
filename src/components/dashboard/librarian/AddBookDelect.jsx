@@ -18,7 +18,7 @@ console.log(user,'userlist');
 
     });
     const data = await res.json();
-    redirect('/')
+    redirect('/dashboard/librarian/overview')
     // console.log(data,'data');
   };
 
