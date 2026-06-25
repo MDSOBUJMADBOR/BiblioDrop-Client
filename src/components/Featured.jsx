@@ -18,7 +18,7 @@ Featured?.map(Features => <BookCard key={Features?._id} book={Features}></BookCa
 }
 </div> 
 <div className='flex items-center justify-center pt-120'>
-  <Link href="/books"><Button>View All</Button></Link>
+  <Link href="/books"><Button variant='outline'>View All</Button></Link>
 </div>
                     </div>
     );

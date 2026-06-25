@@ -12,7 +12,7 @@ import AddBookDelect from "@/components/dashboard/librarian/AddBookDelect";
 const ManageInventory = () => {
   const { data: session } = authClient.useSession();
   const user = session?.user;
-
+ 
   const [books, setBooks] = useState([]);
 
   // ✅ fetch books

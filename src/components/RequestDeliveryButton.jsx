@@ -21,11 +21,16 @@ const RequestDeliveryButton = ({ book }) => {
       bookId: book._id,
       title: book.title,
       author: book.author,
+      email:book.email,
       category: book.category,
       deliveryFee: book.deliveryFee,
       image: book.image,
       description: book.description,
       createdAt: book.createdAt,
+
+       requesterName: session.user.name,
+      requesterEmail: session.user.email,
+
       status: "pending",
       requestDate: new Date(),
     };
