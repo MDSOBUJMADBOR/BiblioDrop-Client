@@ -23,7 +23,7 @@ const [error, setError] = useState("");
   const user = userData.data?.user; 
 
 const handleImageUpload = async (e) => {
-   
+
   console.log(user,'user');
   const file = e.target.files[0];
   if (!file) return;
@@ -77,17 +77,35 @@ const handleSubmit = async (e) => {
     return;
   }
 
+  // const bookData = {
+  //   title: formData.get("title"),
+  //   author: formData.get("author"),
+  //   category: formData.get("category"),
+  //   deliveryFee: formData.get("deliveryFee"),
+  //   email:user.email,
+  //   description: formData.get("description"),
+  //   image: imageUrl,
+  //   createdAt: new Date(),
+  //   status: "unpublish",
+  // };
   const bookData = {
-    title: formData.get("title"),
-    author: formData.get("author"),
-    category: formData.get("category"),
-    deliveryFee: formData.get("deliveryFee"),
-    email:user.email,
-    description: formData.get("description"),
-    image: imageUrl,
-    createdAt: new Date(),
-    status: "unpublish",
-  };
+  title: formData.get("title"),
+  author: formData.get("author"),
+  category: formData.get("category"),
+  deliveryFee: formData.get("deliveryFee"),
+  description: formData.get("description"),
+
+  // book info
+  image: imageUrl,
+  createdAt: new Date(),
+  status: "unpublish",
+
+  // user info
+  email: user?.email,
+  userName: user?.name,
+  userImage: user?.image,
+  role: user?.role || "user",
+};
 // console.log(bookData);
   try {
     const res = await fetch("http://localhost:8080/bookpost", {

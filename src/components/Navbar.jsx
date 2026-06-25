@@ -34,11 +34,11 @@ text: "Browse Books"
 export default function Navbar() {
 const { data: session } = useSession(); 
   const role = session?.user?.role;
-console.log(role,'role');
+// console.log(role,'role');
 
   const userData = authClient.useSession(); 
 const user = userData.data?.user;  
-console.log(user,'user');
+// console.log(user,'user');
   const pathname = usePathname();
 
   const [open, setOpen] = useState(false);

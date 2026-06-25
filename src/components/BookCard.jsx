@@ -17,25 +17,29 @@ const BookCard = ({ book }) => {
   } = book;
 console.log(book.image,'imag');
   return (
-    <div className=" rounded-2xl shadow-md border  overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+    <div className="rounded-2xl shadow-md border bg-white overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
       
-      {/* 🔥 IMAGE SECTION */}
-      <div className="relative h-56  flex items-center justify-center">
+      
+      <div className=" h-56 bg-gradient-to-r from-blue-100 to-purple-100 flex items-center justify-center">
         
        
-          <Image src={image || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600'}
+           <Image src={image || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600'}
 
-                    alt="Course Image"
-                    fill                                     
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover "
-                />
-  
+                    alt="Course Image" 
+                    height={200}
+                    width={400}
+                    
+                                     
+                    // sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover border"
+                />   
       </div>
+    
+
 
       {/* 📘 CONTENT */}
       <div className="p-5 space-y-2">
-        <h2 className="text-lg font-bold text-gray-800">
+        <h2 className="text-lg font-bold text-gray-800 ">
           {title}
         </h2>
 
@@ -62,7 +66,12 @@ console.log(book.image,'imag');
           </Button>
         </Link>
 
-        
+        {/* <Button
+          disabled={status !== "publish"}
+          className="rounded-xl hover:scale-105 transition"
+        >
+          {status === "publish" ? "Borrow" : "Unavailable"}
+        </Button> */}
       </div>
     </div>
   );
