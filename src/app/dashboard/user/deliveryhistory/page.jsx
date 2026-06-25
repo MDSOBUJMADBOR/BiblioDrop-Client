@@ -1,170 +1,166 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Table } from "@heroui/react";
+import { useEffect, useState } from "react";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  Chip,
+} from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
 
-const DeliveryHistory = () => {
+export default function DeliveryHistory() {
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
-  const [requests, setRequests] = useState([]);
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getRequests = async () => {
-      if (!user?.email) return;
+    if (!user?.email) return;
 
+    const fetchData = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/delivery-request/email/${user.email}`
+          `http://localhost:8080/delivery-requests/${user.email}`
         );
 
         const data = await res.json();
-        setRequests(data);
+
+        setBooks(Array.isArray(data) ? data : []);
       } catch (error) {
-        console.error(
-          "Error fetching delivery history:",
-          error
-        );
+        console.error("Fetch error:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    getRequests();
-  }, [user]);
-
-
-const getStatusColor = (status) => {
-  const currentStatus = status?.toLowerCase();
-
-  if (currentStatus === "delivered") {
-    return "bg-green-500 text-white";
-  }
-
-  if (currentStatus === "pending") {
-    return "bg-yellow-500 text-white";
-  }
-
-  return "bg-blue-500 text-white";
-};
+    fetchData();
+  }, [user?.email]);
 
   return (
-    <div className="w-full">
-      {/* ================= DESKTOP TABLE ================= */}
-      <div className="hidden md:block overflow-x-auto">
-        <Table className="min-w-[900px]">
-          <Table.ScrollContainer>
-            <Table.Content>
-              <Table.Header>
-                <Table.Column >
-                  Book Title
-                </Table.Column>
+    <div className="p-4 md:p-6">
+      <div className="bg-white rounded-xl border shadow-sm p-4">
+        <h2 className="text-xl font-semibold mb-4">
+          Delivery History
+        </h2>
 
-                <Table.Column>
-                  Delivery Fee
-                </Table.Column>
+        {/* Mobile View */}
+        <div className="grid gap-4 md:hidden">
+          {books.length > 0 ? (
+            books.map((book) => (
+              <div
+                key={book._id}
+                className="border rounded-xl p-4 shadow-sm"
+              >
+                <h3 className="font-semibold text-lg">
+                  {book.title}
+                </h3>
 
-                <Table.Column>
-                  Request Date
-                </Table.Column>
+                <div className="mt-2 space-y-2 text-sm text-gray-600">
+                  <p>
+                    💰 Delivery Fee: ৳{book.deliveryFee}
+                  </p>
 
-                <Table.Column>
-                  Status
-                </Table.Column>
-              </Table.Header>
+                  <p>
+                    📅 Request Date:{" "}
+                    {book.requestDate
+                      ? new Date(
+                          book.requestDate
+                        ).toLocaleDateString()
+                      : "N/A"}
+                  </p>
+                </div>
 
-              <Table.Body>
-                {requests.length > 0 ? (
-                  requests.map((book) => (
-                    <Table.Row key={book._id}>
-                      <Table.Cell>
-                        {book.title}
-                      </Table.Cell>
-
-                      <Table.Cell>
-                        ${book.deliveryFee}
-                      </Table.Cell>
-
-                      <Table.Cell>
-                        {book.requestDate
-                          ? new Date(
-                              book.requestDate
-                            ).toLocaleDateString()
-                          : "N/A"}
-                      </Table.Cell>
-
-                      <Table.Cell>
-                       <span
-  className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
-    book.status
-  )}`}
->
-  {book.status || "Pending"}
-</span>
-                      </Table.Cell>
-                    </Table.Row>
-                  ))
-                ) : (
-                  <Table.Row>
-                    <Table.Cell
-                      colSpan={4}
-                      className="text-center font-bold text-2xl py-10"
-                    >
-                      No Delivery History Found
-                    </Table.Cell>
-                  </Table.Row>
-                )}
-              </Table.Body>
-            </Table.Content>
-          </Table.ScrollContainer>
-        </Table>
-      </div>
-
-      {/* ================= MOBILE CARD ================= */}
-      <div className="md:hidden space-y-4">
-        {requests.length > 0 ? (
-          requests.map((book) => (
-            <div
-              key={book._id}
-              className="bg-white p-4 rounded-xl shadow border"
-            >
-              <h2 className="font-bold text-lg">
-                {book.title}
-              </h2>
-
-              <p className="text-sm text-gray-500 mt-2">
-                Delivery Fee: $
-                {book.deliveryFee}
+                <div className="mt-3">
+                  <Chip
+                    color={
+                      book.status === "delivered"
+                        ? "success"
+                        : "warning"
+                    }
+                    variant="flat"
+                  >
+                    {book.status === "delivered"
+                      ? "delivered"
+                      : "pending"}
+                  </Chip>
+                </div>
+              </div>
+            ))
+          ) : (
+            !loading && (
+              <p className="text-center text-gray-500">
+                No delivery history found
               </p>
+            )
+          )}
+        </div>
 
-              <p className="text-sm text-gray-500">
-                Request Date:{" "}
+        {/* Desktop View */}
+        <div className="hidden md:block">
+        <Table className="min-w-[900px]">
+  <Table.ScrollContainer>
+    <Table.Content>
+      <Table.Header>
+        <Table.Column>Book Title</Table.Column>
+        <Table.Column>Delivery Fee</Table.Column>
+        <Table.Column>Request Date</Table.Column>
+        <Table.Column>Status</Table.Column>
+      </Table.Header>
+
+      <Table.Body>
+        {books.length > 0 ? (
+          books.map((book) => (
+            <Table.Row key={book._id}>
+              <Table.Cell>{book.title}</Table.Cell>
+
+              <Table.Cell>
+                ৳{book.deliveryFee}
+              </Table.Cell>
+
+              <Table.Cell>
                 {book.requestDate
                   ? new Date(
                       book.requestDate
                     ).toLocaleDateString()
                   : "N/A"}
-              </p>
+              </Table.Cell>
 
-              <p className="mt-3">
-                Status:{" "}
+              <Table.Cell>
                 <span
-  className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
-    book.status
-  )}`}
->
-  {book.status || "Pending"}
-</span>
-              </p>
-            </div>
+                  className={`px-3 py-1 rounded-full text-sm ${
+                    book.status === "delivered"
+                      ? "bg-green-100 text-green-700"
+                      : "bg-yellow-100 text-yellow-700"
+                  }`}
+                >
+                  {book.status === "delivered"
+                    ? "delivered"
+                    : "pending"}
+                </span>
+              </Table.Cell>
+            </Table.Row>
           ))
         ) : (
-          <div className="text-center border rounded-2xl text-2xl py-10">
-            No Delivery History Found
-          </div>
+          <Table.Row>
+            <Table.Cell
+              colSpan={4}
+              className="text-center font-medium py-10"
+            >
+              No Delivery History Found
+            </Table.Cell>
+          </Table.Row>
         )}
+      </Table.Body>
+    </Table.Content>
+  </Table.ScrollContainer>
+</Table>
+        </div>
       </div>
     </div>
   );
-};
-
-export default DeliveryHistory;
+}

@@ -13,7 +13,7 @@ export default function BookApprovalQueue() {
 
   // ✅ Fetch books
   useEffect(() => {
-    fetch("http://localhost:8080/bookpost")
+    fetch("http://localhost:8080/bookpost")  
       .then((res) => res.json())
       .then((data) => setBooks(data));
   }, []);
