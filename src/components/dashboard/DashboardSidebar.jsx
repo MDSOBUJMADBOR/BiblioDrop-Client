@@ -56,7 +56,7 @@ export default function DashboardSidebar() {
         key: "overview",
         label: "Overview",
         icon: Circle,
-        href: "/dashboard/librarian/overview",
+        href: "/dashboard/librarian/overview", 
       },
       {
         key: "add-book",
@@ -86,23 +86,17 @@ export default function DashboardSidebar() {
         href: "/dashboard/admin/overview",
       },
       {
-        key: "book-approval-queue",
-        label: "Book Approval Queue",
+        key: "manage-all-books",
+        label: "Manage All Books",
         icon: Circle,
-        href: "/dashboard/admin/bookapprovalqueue",
+        href: "/dashboard/admin/manageallbooks",
       },
       {
         key: "manage-users",
         label: "Manage Users",
         icon: Circle,
         href: "/dashboard/admin/manageusers",
-      },
-      {
-        key: "manage-all-books",
-        label: "Manage All Books",
-        icon: Circle,
-        href: "/dashboard/admin/manageallbooks",
-      },
+      },      
       {
         key: "view-all-transactions",
         label: "View All Transactions",

@@ -86,7 +86,7 @@ const handleSubmit = async (e) => {
     description: formData.get("description"),
     image: imageUrl,
     createdAt: new Date(),
-    status: "pending",
+    status: "unpublish",
   };
 // console.log(bookData);
   try {
