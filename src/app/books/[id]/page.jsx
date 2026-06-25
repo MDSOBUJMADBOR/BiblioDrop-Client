@@ -10,7 +10,8 @@ import Link from "next/link";
 //   Linkedin,
 //   Link as LinkIcon,
 // } from "lucide-react";
-
+import { LogoFacebook,  CircleNumber2, LogoTelegram, LogoLinkedin, BookOpen, ArrowLeft } from '@gravity-ui/icons';
+import { Button } from "@heroui/react";
 const BooksDetailsPage = async ({ params }) => {
   const { id } = await params;
 
@@ -29,11 +30,11 @@ const BooksDetailsPage = async ({ params }) => {
     userImage,
     role
   } = book;
-console.log(userImage);
+console.log(userName);
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
-      <Link href="/books">  <h1>Back</h1></Link>
-      <div className="bg-white rounded-2xl shadow-lg border p-6">
+      <Link href="/books"> <Button className="" variant="tertiary"> <ArrowLeft /> Back to All Books</Button></Link>
+      <div className="bg-white rounded-2xl shadow-lg border  p-6">
         
         <div className="grid md:grid-cols-3 gap-8">
 
@@ -64,7 +65,7 @@ console.log(userImage);
             <div className="mt-4">
               <span className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
                 <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                {status}
+               Available
               </span>
             </div>
 
@@ -81,7 +82,7 @@ console.log(userImage);
               {description}
             </p>
 
-            <div className="mt-8 space-y-2 text-sm">
+            <div className="mt-8  space-y-2 text-sm">
               <p>
                 <span className="font-semibold">
                   Category:
@@ -90,15 +91,15 @@ console.log(userImage);
               </p>
 
               <p>
-                <span className="font-semibold">
+                <span className="font-semibold ">
                   Date Added:
                 </span>{" "}
                 {new Date(createdAt).toLocaleDateString()}
               </p>
             </div>
 
-            <div className="mt-10 flex flex-col sm:flex-row gap-4">
-              <RequestDeliveryButton book={book} />
+            <div className=" flex flex-col sm:flex-row gap-4">
+              <RequestDeliveryButton  book={book} />
 
               <button className="border border-indigo-600 text-indigo-600 px-8 py-3 rounded-lg font-medium flex items-center justify-center gap-2 hover:bg-indigo-50">
                 <Heart size={18} />
@@ -133,7 +134,7 @@ console.log(userImage);
             </p>
           </div>
         </div>
-
+<br />
         <button className="w-full  border border-indigo-300 text-indigo-600 font-medium py-2.5 rounded-xl hover:bg-indigo-50 transition">
           View Profile
         </button>
@@ -162,8 +163,8 @@ console.log(userImage);
 
         <div className="flex items-center gap-5">
           <button className="text-blue-600 hover:scale-110 transition">
-            {/* <Facebook size={18} /> */}
-            facebook
+        
+           <LogoFacebook />
           </button>
 
           <button className="text-gray-700 hover:scale-110 transition font-bold">
@@ -171,13 +172,13 @@ console.log(userImage);
           </button>
 
           <button className="text-blue-700 hover:scale-110 transition">
-            {/* <Linkedin size={18} /> */}
-            link
+           
+            <LogoTelegram />
           </button>
 
           <button className="text-gray-500 hover:scale-110 transition">
-            {/* <LinkIcon size={18} /> */}
-            linkicon 
+            
+            <LogoLinkedin />
           </button>
         </div>
       </div>

@@ -56,7 +56,7 @@ const RequestDeliveryButton = ({ book }) => {
   return (
     <button
       onClick={handleRequest}
-      className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-medium transition cursor-pointer"
+      className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-medium transition cursor-pointer "
     >
       Request Delivery
     </button>

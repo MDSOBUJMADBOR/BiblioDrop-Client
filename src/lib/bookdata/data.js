@@ -14,3 +14,10 @@ const res = await fetch( `http://localhost:8080/bookpost/published/${id}`)
 const data = await res.json()
 return data;
 }
+
+
+export const FeaturedData = async () => {
+    const res = await fetch(`http://localhost:8080/bookpost/published/six`)
+    const data = await res.json()
+    return data;
+} 
