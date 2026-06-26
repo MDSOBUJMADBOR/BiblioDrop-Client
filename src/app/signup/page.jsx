@@ -52,7 +52,8 @@ console.log(user,'user singup');
 
   const handleGoogleSignin = async () => {
     await authClient.signIn.social({
-      provider: "google",
+      provider: "google", 
+       
     });
   }
 

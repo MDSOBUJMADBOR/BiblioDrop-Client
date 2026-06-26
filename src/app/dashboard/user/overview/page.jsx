@@ -1,60 +1,108 @@
 "use client";
 
-import { BookOpen, Clock, FileDollar } from "@gravity-ui/icons";
+import { useEffect, useState } from "react";
+import {
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+} from "recharts";
+
+const COLORS = ["#F59E0B", "#10B981"];
 
 export default function Overview() {
-  const cards = [
-    {
-      title: "Total Books Read",
-      value: 24,
-      icon: BookOpen,
-      bg: "bg-purple-100",
-      iconColor: "text-purple-600",
-    },
-    {
-      title: "Pending Deliveries",
-      value: 2,
-      icon: Clock,
-      bg: "bg-green-100",
-      iconColor: "text-green-600",
-    },
-    {
-      title: "Total Spent on Fees",
-      value: "$120.50",
-      icon: FileDollar,
-      bg: "bg-red-100",
-      iconColor: "text-red-600",
-    },
-  ];
+  const [chartData, setChartData] = useState([
+    { name: "Pending", value: 0 },
+    { name: "Delivered", value: 0 },
+  ]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/delivery-requests/sorna@gmail.com")
+      .then((res) => res.json())
+      .then((data) => {
+        const pending = data.filter(
+          (item) => item.status === "pending"
+        ).length;
+
+        const delivered = data.filter(
+          (item) => item.status === "delivered"
+        ).length;
+
+        setChartData([
+          {
+            name: "Pending",
+            value: pending,
+          },
+          {
+            name: "Delivered",
+            value: delivered,
+          },
+        ]);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
-    <div className="p-6 bg-white rounded-2xl shadow-sm border">
-      <h2 className="text-lg font-semibold mb-4">Overview</h2>
+    <div className="bg-white rounded-2xl shadow-md p-4 sm:p-6">
+      <h2 className="text-xl sm:text-2xl font-bold text-center mb-6">
+        Delivery Overview
+      </h2>
 
-      <div className="grid md:grid-cols-3 gap-4">
-        {cards.map((card, index) => {
-          const Icon = card.icon;
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+        <div className="bg-yellow-100 rounded-xl p-5 text-center shadow">
+          <h3 className="text-base sm:text-lg font-semibold text-yellow-700">
+            Pending
+          </h3>
 
-          return (
-            <div
-              key={index}
-              className={`p-5 rounded-xl flex items-center justify-between ${card.bg}`}
+          <p className="text-3xl sm:text-4xl font-bold mt-2">
+            {chartData[0].value}
+          </p>
+        </div>
+
+        <div className="bg-green-100 rounded-xl p-5 text-center shadow">
+          <h3 className="text-base sm:text-lg font-semibold text-green-700">
+            Delivered
+          </h3>
+
+          <p className="text-3xl sm:text-4xl font-bold mt-2">
+            {chartData[1].value}
+          </p>
+        </div>
+      </div>
+
+      {/* Pie Chart */}
+      <div className="w-full h-[280px] sm:h-[350px] md:h-[420px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={chartData}
+              dataKey="value"
+              nameKey="name"
+              innerRadius={50}
+              outerRadius={90}
+              paddingAngle={5}
+              label={({ name, value }) => `${name}: ${value}`}
             >
-              <div>
-                <p className="text-sm text-gray-600">{card.title}</p>
-                <h3 className="text-2xl font-bold mt-1">{card.value}</h3>
-              </div>
+              {chartData.map((entry, index) => (
+                <Cell
+                  key={index}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
 
-              <div
-                className={`p-3 rounded-lg bg-white shadow ${card.iconColor}`}
-              >
-                <Icon size={20} />
-              </div>
-            </div>
-          );
-        })}
+            <Tooltip />
+            <Legend
+              verticalAlign="bottom"
+              align="center"
+              iconType="circle"
+            />
+          </PieChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );
 }
-

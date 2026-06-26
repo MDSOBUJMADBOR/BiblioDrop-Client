@@ -20,24 +20,38 @@ import { FcGoogle } from "react-icons/fc";
 
 export default function SignInPage() {
     const [loading, setLoading] = useState(false);
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true)
-    const formData = new FormData(e.currentTarget);
-    const user = Object.fromEntries(formData.entries());
-    
- try {
-      await authClient.signIn.email({
-        ...user,
-        callbackURL: "/",
-      });
-    } catch (error) {
-      alert("❌ Email or password is incorrect!");
-      console.log("Login error:", error);
-    } finally {
-      setLoading(false);
+ const onSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+
+  const formData = new FormData(e.currentTarget);
+  const user = Object.fromEntries(formData.entries());
+
+  try {
+    const result = await authClient.signIn.email({
+      ...user,
+      callbackURL: "/",
+    });
+
+    console.log(result);
+
+    // যদি login fail করে
+    if (result?.error) {
+      alert("❌ User not found or incorrect email/password!");
+      
+      return;
     }
-  };
+
+    alert("✅ Login Successful!");
+  } catch (error) {
+    console.log(error);
+
+    alert("❌ User not found or incorrect email/password!");
+ 
+  } finally {
+    setLoading(false);
+  }
+};
 
   
   const handleGoogleSignin = async () => {
@@ -45,11 +59,14 @@ export default function SignInPage() {
       await authClient.signIn.social({
         provider: "google",
         callbackURL: "/",
+       
       });
     } catch (error) {
       alert("Google login failed!");
       console.log(error);
     }
+
+    
   };
 
 

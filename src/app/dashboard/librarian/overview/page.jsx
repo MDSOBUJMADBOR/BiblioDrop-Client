@@ -1,6 +1,7 @@
 "use client";
 
 import LibrarianOverview from "@/components/dashboard/librarian/overviewlibarian";
+import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
 import {
   PieChart,
@@ -14,15 +15,19 @@ import {
 const COLORS = ["#3B82F6", "#10B981"];
 
 export default function LibrarianStatistics() {
+  const userData = authClient.useSession();  
+const user = userData.data?.user;  
+console.log(user?.email,'user');
+
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [booksRes, deliveriesRes] = await Promise.all([
-          fetch("http://localhost:8080/bookpost/email/sathi@gmail.com"),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost/email/${user?.email}`),
           fetch(
-            "http://localhost:8080/delivery-request/email/sathi@gmail.com"
+            `${process.env.NEXT_PUBLIC_API_URL}/delivery-request/email/${user?.email}`
           ),
         ]);
 

@@ -37,7 +37,7 @@ const { data: session } = useSession();
   const role = session?.user?.role;
 // console.log(role,'role');
 
-  const userData = authClient.useSession(); 
+  const userData = authClient.useSession();  
 const user = userData.data?.user;  
 // console.log(user,'user');
   const pathname = usePathname();
@@ -98,7 +98,7 @@ await authClient.signOut();
 
         {/* User Image */}
         <Image
-          src={user?.image || "/default-user.png"}
+          src={user?.image || "https://i.ibb.co/20S43LSS/book.jpg"}
           alt="user"
           width={32}
           height={32}

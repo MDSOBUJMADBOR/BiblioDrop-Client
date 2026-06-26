@@ -6,8 +6,12 @@ import {
   ChartColumn,
   ShoppingCart,
 } from "@gravity-ui/icons";
+import { authClient } from "@/lib/auth-client";
 
 export default function LibrarianOverview() {
+  const userData = authClient.useSession(); 
+  const user = userData.data?.user;  
+  console.log(user?.email,'user');
   const [booksCount, setBooksCount] = useState(0);
   const [deliveriesCount, setDeliveriesCount] = useState(0);
 
@@ -15,9 +19,9 @@ export default function LibrarianOverview() {
     const fetchData = async () => {
       try {
         const [bookRes, deliveryRes] = await Promise.all([
-          fetch("http://localhost:8080/bookpost/email/sathi@gmail.com"),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost/email/${user?.email}`),
           fetch(
-            "http://localhost:8080/delivery-request/email/sathi@gmail.com"
+            `${process.env.NEXT_PUBLIC_API_URL}/delivery-request/email/${user?.email}`
           ),
         ]);
 

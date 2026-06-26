@@ -71,13 +71,7 @@ const ManageInventory = () => {
                       <Table.Cell>${book.deliveryFee}</Table.Cell>
 
                       <Table.Cell>
-                        {/* <span
-                          className={`px-3 py-1 rounded-full text-sm ${getStatusColor(
-                            book.status
-                          )}`}
-                        >
-                          {book.status || "Pending"}
-                        </span> */}
+                       
                         <span
   className={`px-3 py-1 rounded-full text-sm ${getStatusColor(
     book.status
@@ -89,8 +83,8 @@ const ManageInventory = () => {
 
                       <Table.Cell>
                         <div className="flex gap-2">
-                          {/* // books/${book._id} */}
-                          <Link href={`/books`}>
+                          
+                          <Link href={`books/${book._id}`}>
                             <Button  className="rounded-md">
                               <Eye size={14} />
                             </Button>
@@ -152,7 +146,7 @@ const ManageInventory = () => {
               </p>
 
               <div className="flex gap-2 mt-3">
-                <Link href={`/book/${book._id}`}>
+                <Link href={`books/${book._id}`}>
                   <Button  className="rounded-md">
                     <Eye size={14} />
                   </Button>

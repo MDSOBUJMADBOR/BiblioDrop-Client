@@ -125,7 +125,7 @@ export default function ManageDeliveries() {
       </h2>
 
       {/* Mobile View */}
-      <div className="grid gap-4 md:hidden">
+      {/* <div className="grid gap-4  md:hidden">
         {deliveries.map((item) => (
           <div
             key={item._id}
@@ -163,7 +163,71 @@ export default function ManageDeliveries() {
             </div>
           </div>
         ))}
+      </div> */}
+
+{/* Mobile View */}
+<div className="grid gap-4 md:hidden">
+  {deliveries.length === 0 ? (
+    <div className="text-center py-8 text-gray-500">
+      No delivery requests found.
+    </div>
+  ) : (
+    deliveries.map((item) => (
+      <div
+        key={item._id}
+        className="bg-white rounded-xl shadow-md border p-4"
+      >
+        <div className="space-y-3">
+          <div>
+            <p className="text-xs text-gray-500">Client</p>
+            <p className="font-semibold text-gray-800">
+              {item.clientName ||
+                item.userName ||
+                item.name ||
+                "N/A"}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-xs text-gray-500">Book</p>
+            <p className="font-medium">
+              {item.bookTitle || item.title || "N/A"}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-xs text-gray-500">Request Date</p>
+            <p>
+              {item.createdAt
+                ? new Date(item.createdAt).toLocaleDateString()
+                : "N/A"}
+            </p>
+          </div>
+
+          <div>
+            <p className="text-xs text-gray-500 mb-1">Status</p>
+            <Chip color={getStatusColor(item.status)}>
+              {item.status || "pending"}
+            </Chip>
+          </div>
+
+          <div>
+            <p className="text-xs text-gray-500 mb-2">
+              Update Status
+            </p>
+            <div className="w-full">
+              <StatusDropdown item={item} />
+            </div>
+          </div>
+        </div>
       </div>
+    ))
+  )}
+</div>
+
+
+
+
 
       {/* Desktop Table */}
       <div className="hidden md:block">
