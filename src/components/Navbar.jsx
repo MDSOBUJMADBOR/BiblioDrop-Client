@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import {
   Menu,
   X,
-  User,
+  User, 
   Book,
   BarChart,
   LogOut,
@@ -54,14 +55,34 @@ await authClient.signOut();
 
 }
   return (
-// bg-gradient-to-r from-[#0b1d3a] to-[#0f2a5c]
-    <nav className="bg-[#0b1d3a] text-white">
+
+    // <nav className="bg-[#0b1d3a] text-white">
+<motion.nav
+  initial={{ y: -80, opacity: 0 }}
+  animate={{ y: 0, opacity: 1 }}
+  transition={{
+    duration: 0.5,
+    ease: "easeOut",
+  }}
+  className="bg-[#0b1d3a] text-white"
+>
+
+
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
 
         {/* Logo */}
-        <Link href="/" className="text-xl font-bold">
+        {/* <Link href="/" className="text-xl font-bold">
           Book<span className="text-yellow-400">Nest</span>
-        </Link>
+        </Link> */}
+        <motion.div
+  whileHover={{
+    scale: 1.08,
+  }}
+>
+  <Link href="/" className="text-xl font-bold">
+    Book<span className="text-yellow-400">Nest</span>
+  </Link>
+</motion.div>
 
         {/* Desktop */}
         <div className="hidden md:flex gap-6 items-center">
@@ -92,7 +113,18 @@ await authClient.signOut();
       </div>
     </button>
 
-    {dropdown && (
+
+
+
+
+
+
+
+
+
+
+
+    {/* {dropdown && (
       <div className="absolute z-50 top-10 text-white bg-[#0d244b] rounded p-1 w-44">
         <Link href="/" className=" gap-2  hover:bg-gray-300 ">
           <div className="">
@@ -124,7 +156,84 @@ await authClient.signOut();
         </Link>
 
       </div>
-    )}
+    )} */}
+
+
+
+
+<AnimatePresence>
+  {dropdown && (
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: -10,
+        scale: 0.95,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+      }}
+      exit={{
+        opacity: 0,
+        y: -10,
+        scale: 0.95,
+      }}
+      transition={{
+        duration: 0.25,
+      }}
+      className="absolute z-50 top-10 bg-[#0d244b] rounded p-1 w-44"
+    >
+      <Link href="/" className="gap-2 hover:bg-gray-300">
+        <div>
+          <div className="flex items-center gap-2">
+            <Image
+              src={user?.image || "/default-user.png"}
+              alt="user"
+              width={20}
+              height={20}
+              className="rounded-full object-cover border"
+            />
+            <p>{user?.name}</p>
+          </div>
+
+          <p className="text-[10px]">{user?.email}</p>
+          <p className="text-[10px]">{role}</p>
+        </div>
+      </Link>
+
+      <Link
+        href={`/dashboard/${role}/overview`}
+        className="flex gap-2 p-1 mt-1 hover:bg-gray-300 hover:text-black"
+      >
+        <div className="flex items-center gap-2">
+          <LayoutDashboard size={16} />
+          Dashboard
+        </div>
+      </Link>
+
+      <Link
+        href="/dashboard/books"
+        className="flex gap-2 p-1 mt-1 hover:bg-gray-300 hover:text-black"
+      >
+        <div className="flex items-center gap-2">
+          <User size={16} />
+          Profile
+        </div>
+      </Link>
+    </motion.div>
+  )}
+</AnimatePresence>
+
+
+
+
+
+
+
+
+
+
   </div>
 )}
 
@@ -195,6 +304,7 @@ await authClient.signOut();
 </div> 
 
 
-    </nav>
+    {/* </nav> */}
+    </motion.nav>
   );
 }

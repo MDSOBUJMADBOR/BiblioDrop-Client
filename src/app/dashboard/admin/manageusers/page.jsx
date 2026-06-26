@@ -21,7 +21,7 @@ export default function ManageUsers() {
 
   // ✅ Fetch users
   useEffect(() => {
-    fetch("http://localhost:8080/user")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`)
       .then((res) => res.json())
       .then((data) => {
         setUsers(data);
@@ -33,7 +33,7 @@ export default function ManageUsers() {
   const handleDelete = async (id) => {
     if (!confirm("Are you sure?")) return;
 
-    const res = await fetch(`http://localhost:8080/user/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${id}`, {
       method: "DELETE",
     });
 
@@ -47,7 +47,7 @@ export default function ManageUsers() {
   // ✅ Role change — v3 Dropdown.Menu fires onAction with the item's `id`
   const handleRoleChange = async (id, role) => {
     console.log(id, role);
-    const res = await fetch(`http://localhost:8080/user/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ role }),

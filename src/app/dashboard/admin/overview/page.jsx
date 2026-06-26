@@ -17,8 +17,8 @@ export default function AdminOverview() {
     const fetchData = async () => {
       try {
         const [userRes, bookRes] = await Promise.all([
-          fetch("http://localhost:8080/user"),
-          fetch("http://localhost:8080/bookpost"),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost`),
         ]);
 
         const users = await userRes.json();

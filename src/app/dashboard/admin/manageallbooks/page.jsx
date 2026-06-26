@@ -13,7 +13,7 @@ export default function BookApprovalQueue() {
 
   // ✅ Fetch books
   useEffect(() => {
-    fetch("http://localhost:8080/bookpost")  
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost`)  
       .then((res) => res.json())
       .then((data) => setBooks(data));
   }, []);
@@ -50,7 +50,7 @@ export default function BookApprovalQueue() {
   const handleDelete = async (id) => {
     if (!confirm("Are you sure?")) return;
 
-    const res = await fetch(`http://localhost:8080/bookpost/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost/${id}`, {
       method: "DELETE",
     });
 
@@ -65,8 +65,8 @@ export default function BookApprovalQueue() {
   const handleToggleStatus = async (id, currentStatus) => {
     const newStatus =
       currentStatus === "publish" ? "unpublish" : "publish";
-
-    const res = await fetch(`http://localhost:8080/bookpost/${id}`, {
+// NEXT_PUBLIC_API_URL
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status: newStatus }),

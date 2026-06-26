@@ -25,7 +25,7 @@ export default function DeliveryHistory() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/delivery-requests/${user.email}`
+          `${process.env.NEXT_PUBLIC_API_URL}/delivery-requests/${user.email}`
         );
 
         const data = await res.json();

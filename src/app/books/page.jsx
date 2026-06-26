@@ -11,10 +11,10 @@ const Books = () => {
 
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
-
+// NEXT_PUBLIC_API_URL
   // ✅ Fetch books
   useEffect(() => {
-    fetch("http://localhost:8080/bookpost/published")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost/published`)
       .then((res) => res.json())
       .then((data) => {
         setBooks(data);

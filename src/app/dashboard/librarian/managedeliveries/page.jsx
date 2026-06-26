@@ -27,7 +27,7 @@ export default function ManageDeliveries() {
     if (!user?.email) return;
 
     fetch(
-      `http://localhost:8080/delivery-request/email/${user.email}`
+      `${process.env.NEXT_PUBLIC_API_URL}/delivery-request/email/${user.email}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -44,7 +44,7 @@ export default function ManageDeliveries() {
   const handleStatusChange = async (id, status) => {
     try {
       const res = await fetch(
-        `http://localhost:8080/delivery-request/${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/delivery-request/${id}`,
         {
           method: "PATCH",
           headers: {

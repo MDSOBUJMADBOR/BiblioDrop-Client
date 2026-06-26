@@ -19,7 +19,7 @@ const ManageInventory = () => {
   useEffect(() => {
     const getBooks = async () => { 
       if (!user?.email) return;
-// http://localhost:8080/bookpost/email/sathi@gmail.com
+
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/bookpost/email/${user.email}`
@@ -34,12 +34,7 @@ const ManageInventory = () => {
     getBooks();
   }, [user]);
 
-  // ✅ status color
-  // const getStatusColor = (status) => {
-  //   if (status === "Published") return "bg-green-500 text-white";
-  //   if (status === "Unpublished") return "bg-red-500 text-white";
-  //   return "bg-yellow-500 text-white";
-  // };
+  
   const getStatusColor = (status) => {
   if (status === "approved") return "bg-green-500 text-white";
   if (status === "rejected") return "bg-red-500 text-white";

@@ -37,7 +37,7 @@ const RequestDeliveryButton = ({ book }) => {
 
     try {
       const res = await fetch(
-        "http://localhost:8080/delivery-request",
+        `${process.env.NEXT_PUBLIC_API_URL}/delivery-request`,
         {
           method: "POST",
           headers: {

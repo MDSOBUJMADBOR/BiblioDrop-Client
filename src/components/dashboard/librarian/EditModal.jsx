@@ -24,7 +24,6 @@ e.preventDefault();
 const formData = new FormData(e.currentTarget);
 const item = Object.fromEntries(formData.entries());
 
-// console.log(item,'form');
 
 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost/${_id}` , {
   method: "PATCH",
