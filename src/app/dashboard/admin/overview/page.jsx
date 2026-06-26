@@ -1,119 +1,129 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import AdminOverview from "@/components/dashboard/admin/overviewadmin";
+import { useEffect, useState } from "react";
 import {
-  Persons,
-  BookOpen,
-  ShoppingCart,
-  ArrowRotateRightNumber5,
-} from "@gravity-ui/icons";
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+} from "recharts";
 
-export default function AdminOverview() {
-  const [usersCount, setUsersCount] = useState(0);
-  const [booksCount, setBooksCount] = useState(0);
+const COLORS = ["#3B82F6", "#10B981", "#F59E0B"];
 
-  // ✅ Fetch data
+export default function AdminOverviewPage() {
+  const [stats, setStats] = useState({
+    books: 0,
+    users: 0,
+    transactions: 0,
+  });
+
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [userRes, bookRes] = await Promise.all([
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`),
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost`),
+        const [booksRes, usersRes, transactionsRes] = await Promise.all([
+          fetch("http://localhost:8080/bookpost"),
+          fetch("http://localhost:8080/user"),
+          fetch("http://localhost:8080/delivery-request/delivered"),
         ]);
 
-        const users = await userRes.json();
-        const books = await bookRes.json();
+        const books = await booksRes.json();
+        const users = await usersRes.json();
+        const transactions = await transactionsRes.json();
 
-        setUsersCount(users.length);
-        setBooksCount(books.length);
-      } catch (error) {
-        console.log(error);
+        setStats({
+          books: books?.length || 0,
+          users: users?.length || 0,
+          transactions: transactions?.length || 0,
+        });
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  // ✅ Stats dynamic
-  const stats = [
-    {
-      label: "Total Users",
-      value: usersCount,
-      bgColor: "bg-[#f5f3ff]",
-      borderColor: "border-[#ede9fe]",
-      iconLeft: (
-        <Persons className="w-6 h-6 text-[#8b5cf6] opacity-80" />
-      ),
-      iconRight: (
-        <Persons className="w-10 h-10 text-[#8b5cf6] opacity-30" />
-      ),
-    },
-    {
-      label: "Total Books",
-      value: booksCount,
-      bgColor: "bg-[#f0f9ff]",
-      borderColor: "border-[#e0f2fe]",
-      iconLeft: (
-        <BookOpen className="w-6 h-6 text-[#0ea5e9] opacity-80" />
-      ),
-      iconRight: (
-        <BookOpen className="w-10 h-10 text-[#0ea5e9] opacity-30" />
-      ),
-    },
-    {
-      label: "Total Deliveries",
-      value: 0, // future dynamic
-      bgColor: "bg-[#f0fdf4]",
-      borderColor: "border-[#dcfce7]",
-      iconLeft: (
-        <span className="text-[#16a34a] text-xs font-bold opacity-90">
-          Total Deliveries
-        </span>
-      ),
-      iconRight: (
-        <ShoppingCart className="w-10 h-10 text-[#16a34a] opacity-80" />
-      ),
-    },
-    {
-      label: "Total Revenue",
-      value: "$0",
-      bgColor: "bg-[#fff7ed]",
-      borderColor: "border-[#ffedd5]",
-      iconLeft: (
-        <span className="text-[#ea580c] text-xs font-bold opacity-90">
-          Total Revenue
-        </span>
-      ),
-      iconRight: (
-        <ArrowRotateRightNumber5 className="w-10 h-10 text-[#ea580c] opacity-80" />
-      ),
-    },
-  ];
+ const chartData = [
+  { name: "Books", value: stats.books, fill: "#3B82F6" },
+  { name: "Users", value: stats.users, fill: "#10B981" },
+  { name: "Total Deliveries", value: stats.transactions, fill: "#F59E0B" },
+];
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen text-xl font-semibold">
+        Loading...
+      </div>
+    );
+  }
 
   return (
-    <div className="w-full bg-white border-2 border-[#f1f5f9] rounded-2xl p-6 shadow-[0_4px_25px_-4px_rgba(148,163,184,0.05)]">
-      <h2 className="text-[#1e293b] text-base font-bold mb-5">
-        Overview
+  <div className="bg-gray-100 py-10">
+  <div className="max-w-7xl mx-auto">
+
+    <h2 className="text-4xl font-bold mb-10">
+      Admin Analytics
+    </h2>
+
+    {/* Cards */}
+    {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      <div className="bg-blue-500 text-white rounded-xl p-6">
+        <h2 className="text-lg font-semibold bg-amber-300">Total Books</h2>
+        <p className="text-5xl font-bold mt-3">{stats.books}</p>
+      </div>
+
+      <div className="bg-green-500 text-white rounded-xl p-6">
+        <h2 className="text-lg font-semibold">Total Users</h2>
+        <p className="text-5xl font-bold mt-3">{stats.users}</p>
+      </div>
+
+      <div className="bg-orange-500 text-white rounded-xl p-6">
+        <h2 className="text-lg font-semibold">
+          Delivered Transactions
+        </h2>
+        <p className="text-5xl font-bold mt-3">
+          {stats.transactions}
+        </p>
+      </div>
+    </div> */}
+    <AdminOverview></AdminOverview>
+
+    {/* Pie Chart */}
+    <div className="bg-white rounded-xl p-6 shadow">
+      <h2 className="text-2xl font-semibold mb-4">
+        Dashboard Statistics
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {stats.map((stat, index) => (
-          <div
-            key={index}
-            className={`flex items-center justify-between p-5 ${stat.bgColor} border ${stat.borderColor} rounded-2xl h-24`}
-          >
-            <div className="flex flex-col justify-between h-full">
-              <div>{stat.iconLeft}</div>
-
-              <span className="text-[#1e293b] text-2xl font-bold mt-1">
-                {stat.value}
-              </span>
-            </div>
-
-            <div>{stat.iconRight}</div>
-          </div>
-        ))}
-      </div>
+      <PieChart
+        style={{
+          width: "100%",
+          maxWidth: "500px",
+          maxHeight: "50vh",
+          margin: "auto",
+          aspectRatio: 1,
+        }}
+      >
+        <Pie
+          data={chartData}
+          dataKey="value"
+          innerRadius={90}
+          outerRadius={130}
+          paddingAngle={5}
+          label
+        />
+        <Tooltip />
+        <Legend />
+      </PieChart>
     </div>
+
+  </div>
+</div>
   );
 }

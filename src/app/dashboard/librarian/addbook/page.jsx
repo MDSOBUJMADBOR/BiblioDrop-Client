@@ -188,8 +188,9 @@ console.log(data);
                 <ListBox className="outline-none">
                   <ListBox.Item className={listItemStyle} id="story" textValue="Story">Story</ListBox.Item>
                   <ListBox.Item className={listItemStyle} id="novel" textValue="Novel">Novel</ListBox.Item>
-                  <ListBox.Item className={listItemStyle} id="academic" textValue="Academic">Academic</ListBox.Item>
-                  <ListBox.Item className={listItemStyle} id="sci-fi" textValue="Sci-Fi">Sci-Fi</ListBox.Item>
+                  <ListBox.Item className={listItemStyle} id="academic" textValue="Academic">Academic</ListBox.Item>                
+                  <ListBox.Item className={listItemStyle} id="sci-fi" textValue="Sci-Fi">Science</ListBox.Item>
+                  
                 </ListBox>
               </Select.Popover>
             </Select>

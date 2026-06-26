@@ -18,7 +18,7 @@ console.log(user,'userlist');
 
     });
     const data = await res.json();
-    redirect('/dashboard/librarian/overview')
+    redirect('/dashboard/librarian/addbook')
     // console.log(data,'data');
   };
 
