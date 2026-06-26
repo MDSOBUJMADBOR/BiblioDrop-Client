@@ -11,9 +11,9 @@ export default function Librarian() {
   useEffect(() => {
     const getLibrarians = async () => {
       try {
-        const res = await fetch("http://localhost:8080/librarians");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/librarians`);
         const data = await res.json();
-        setLibrarians(data);
+        setLibrarians(data); 
       } catch (error) {
         console.error(error);
       } finally {

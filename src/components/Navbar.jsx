@@ -121,46 +121,6 @@ await authClient.signOut();
 
 
 
-
-
-
-    {/* {dropdown && (
-      <div className="absolute z-50 top-10 text-white bg-[#0d244b] rounded p-1 w-44">
-        <Link href="/" className=" gap-2  hover:bg-gray-300 ">
-          <div className="">
-            <div className="flex items-center gap-2">
-               <Image
-          src={user?.image || "/default-user.png"}
-          alt="user"
-          width={20}
-          height={20}
-          className="rounded-full object-cover border"
-        />
-              <p>{user?.name}</p>
-              </div>   
-             <p className="text-[10px]">{user?.email}</p>  
-             <p className="text-[10px]">{role}</p>           
-          </div>
-         
-        </Link>
-        <Link href={`/dashboard/${role}/overview`} className="flex gap-2 p-1 mt-1 hover:bg-gray-300 hover:text-black">
-          <div className="flex items-center gap-2">
-           <LayoutDashboard size={16} /> Dashboard
-          </div>
-        </Link>
-
-        <Link href="/dashboard/books" className="flex gap-2 p-1 mt-1 hover:bg-gray-300 hover:text-black">
-          <div className="flex items-center gap-2">
-             <User size={16} /> Profile
-          </div>
-        </Link>
-
-      </div>
-    )} */}
-
-
-
-
 <AnimatePresence>
   {dropdown && (
     <motion.div
@@ -213,7 +173,7 @@ await authClient.signOut();
       </Link>
 
       <Link
-        href="/dashboard/books"
+        href="/profile"
         className="flex gap-2 p-1 mt-1 hover:bg-gray-300 hover:text-black"
       >
         <div className="flex items-center gap-2">
