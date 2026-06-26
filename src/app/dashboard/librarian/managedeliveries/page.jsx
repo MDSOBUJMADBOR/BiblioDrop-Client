@@ -129,7 +129,7 @@ export default function ManageDeliveries() {
         {deliveries.map((item) => (
           <div
             key={item._id}
-            className="border rounded-xl p-4 shadow-sm bg-white"
+            className="border rounded-xl p-4 shadow-sm bg-white" 
           >
             <h3 className="font-semibold text-base">
               {item.bookTitle || item.title || "No Title"}

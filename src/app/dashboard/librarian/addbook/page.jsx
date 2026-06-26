@@ -77,17 +77,6 @@ const handleSubmit = async (e) => {
     return;
   }
 
-  // const bookData = {
-  //   title: formData.get("title"),
-  //   author: formData.get("author"),
-  //   category: formData.get("category"),
-  //   deliveryFee: formData.get("deliveryFee"),
-  //   email:user.email,
-  //   description: formData.get("description"),
-  //   image: imageUrl,
-  //   createdAt: new Date(),
-  //   status: "unpublish",
-  // };
   const bookData = {
   title: formData.get("title"),
   author: formData.get("author"),
@@ -107,11 +96,18 @@ const handleSubmit = async (e) => {
   role: user?.role || "user",
 };
 // console.log(bookData);
+
+const {data:token} = await authClient.token()
+console.log(token,'token');
+
+
+
   try {
     const res = await fetch("http://localhost:8080/bookpost", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
+    authorization: `Bearer ${token?.token}`
   },
   body: JSON.stringify(bookData),
 });

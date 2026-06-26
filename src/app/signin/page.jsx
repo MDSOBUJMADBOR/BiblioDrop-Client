@@ -39,6 +39,7 @@ export default function SignInPage() {
     }
   };
 
+  
   const handleGoogleSignin = async () => {
     try {
       await authClient.signIn.social({
@@ -50,6 +51,8 @@ export default function SignInPage() {
       console.log(error);
     }
   };
+
+
 
   return (
     <div className="bg-cyan-900 min-h-screen flex items-center justify-center">
