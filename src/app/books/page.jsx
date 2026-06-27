@@ -1,5 +1,6 @@
 import BookCard from '@/components/BookCard';
 import { getProduct } from '@/lib/bookdata/data';
+import { Pagination } from '@heroui/react';
 import React from 'react';
 export const dynamic = 'force-dynamic'
 
@@ -26,7 +27,37 @@ const productdata= products.data;
 <div>
  
 </div>
-   
+
+    <Pagination size="sm">         
+          <Pagination.Content>
+            <Pagination.Item>
+              <Pagination.Previous
+                isDisabled={page === 1}
+                
+              >
+                <Pagination.PreviousIcon />
+                Prev
+              </Pagination.Previous>
+            </Pagination.Item>
+            {pages.map((p) => (
+              <Pagination.Item key={p}>
+                <Pagination.Link isActive={p === page} >
+                  {p}
+                </Pagination.Link>
+              </Pagination.Item>
+            ))}
+            <Pagination.Item>
+              <Pagination.Next
+                isDisabled={page === totalPages}
+               
+              >
+                Next
+                <Pagination.NextIcon />
+              </Pagination.Next>
+            </Pagination.Item>
+          </Pagination.Content>
+        </Pagination>
+        
 </div>
   );
 };
