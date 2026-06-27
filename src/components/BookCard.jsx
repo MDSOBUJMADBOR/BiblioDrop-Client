@@ -16,7 +16,9 @@ const BookCard = ({ book }) => {
     image,
     status,
   } = book;
-console.log(book.image,'imag');
+// console.log(book.image,'imag');
+
+
   return (
     <motion.div
   initial={{ opacity: 0, y: 20 }}
@@ -33,22 +35,10 @@ console.log(book.image,'imag');
   }}
   className="group rounded-2xl shadow-md border bg-white overflow-hidden transition-all duration-500"
 >
-    {/* // <div className="rounded-2xl shadow-md border bg-white overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"> */}
-      
-      
+    
       <div className=" h-56 bg-gradient-to-r from-blue-100 to-purple-100 flex items-center justify-center">
         
-       
-           {/* <Image src={image || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600'}
-
-                    alt="Course Image" 
-                    height={200}
-                    width={400}
-                    
-                                     
-                    // sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover border"
-                />    */}
+      
 <div className="h-56 bg-gradient-to-r from-blue-100 to-purple-100 flex items-center justify-center overflow-hidden">
   <Image
     src={
@@ -99,20 +89,10 @@ console.log(book.image,'imag');
         </Link>     
       </div>
 
-{/* <motion.div
-  whileHover={{ scale: 1.05 }}
-  whileTap={{ scale: 0.95 }}
->
-  <Link href={`/books/${_id}`}>
-    <Button className="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl">
-      View Details
-    </Button>
-  </Link>
-</motion.div> */}
 
 
 
-    {/* // </div> */}
+   
     </motion.div>
   );
 };

@@ -17,7 +17,7 @@ const RequestDeliveryButton = ({ book }) => {
       return;}
 
 
-    const deliveryInfo = {
+    const deliveryInfo = { 
       bookId: book._id,
       title: book.title,
       author: book.author,

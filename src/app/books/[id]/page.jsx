@@ -4,16 +4,17 @@ import { Heart } from "lucide-react";
 import { BookCardSingle } from "@/lib/bookdata/data";
 import RequestDeliveryButton from "@/components/RequestDeliveryButton";
 import Link from "next/link";
+// import { headers } from 'next/headers';
 
-// import {
-//   Facebook,
-//   Linkedin,
-//   Link as LinkIcon,
-// } from "lucide-react";
 import { LogoFacebook,  CircleNumber2, LogoTelegram, LogoLinkedin, BookOpen, ArrowLeft } from '@gravity-ui/icons';
 import { Button } from "@heroui/react";
+// import { auth } from "@/lib/auth";
 const BooksDetailsPage = async ({ params }) => {
   const { id } = await params;
+//  const {token} = await auth.api.getToken({
+//     headers: await headers()
+//   })
+
 
   const book = await BookCardSingle(id);
 
