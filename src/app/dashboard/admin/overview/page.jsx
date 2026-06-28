@@ -26,9 +26,9 @@ export default function AdminOverviewPage() {
     const fetchData = async () => {
       try {
         const [booksRes, usersRes, transactionsRes] = await Promise.all([
-          fetch("http://localhost:8080/bookpost"),
-          fetch("http://localhost:8080/user"),
-          fetch("http://localhost:8080/delivery-request/delivered"),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost`),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/delivery-request/delivered`),
         ]);
 
         const books = await booksRes.json();
@@ -72,27 +72,7 @@ export default function AdminOverviewPage() {
       Admin Analytics
     </h2>
 
-    {/* Cards */}
-    {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-      <div className="bg-blue-500 text-white rounded-xl p-6">
-        <h2 className="text-lg font-semibold bg-amber-300">Total Books</h2>
-        <p className="text-5xl font-bold mt-3">{stats.books}</p>
-      </div>
-
-      <div className="bg-green-500 text-white rounded-xl p-6">
-        <h2 className="text-lg font-semibold">Total Users</h2>
-        <p className="text-5xl font-bold mt-3">{stats.users}</p>
-      </div>
-
-      <div className="bg-orange-500 text-white rounded-xl p-6">
-        <h2 className="text-lg font-semibold">
-          Delivered Transactions
-        </h2>
-        <p className="text-5xl font-bold mt-3">
-          {stats.transactions}
-        </p>
-      </div>
-    </div> */}
+   
     <AdminOverview></AdminOverview>
 
     {/* Pie Chart */}

@@ -17,6 +17,7 @@ import {
 import Link from "next/link";
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { toast } from "react-toastify";
 
 export default function SignInPage() {
     const [loading, setLoading] = useState(false);
@@ -41,10 +42,10 @@ export default function SignInPage() {
       
       return;
     }
-
-    alert("✅ Login Successful!");
+    
+    toast.success("✅ Login Successful!")
   } catch (error) {
-    console.log(error);
+    
 
     alert("❌ User not found or incorrect email/password!");
  
@@ -63,7 +64,7 @@ export default function SignInPage() {
       });
     } catch (error) {
       alert("Google login failed!");
-      console.log(error);
+      
     }
     
   };

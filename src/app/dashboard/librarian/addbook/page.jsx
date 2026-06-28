@@ -12,6 +12,7 @@ import {
 } from "@heroui/react";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 
 
@@ -24,7 +25,7 @@ const [error, setError] = useState("");
 
 const handleImageUpload = async (e) => {
 
-  console.log(user,'user');
+  
   const file = e.target.files[0];
   if (!file) return;
 
@@ -95,10 +96,10 @@ const handleSubmit = async (e) => {
   userImage: user?.image,
   role: user?.role || "user",
 };
-// console.log(bookData);
+;
 
 const {data:token} = await authClient.token()
-console.log(token,'token');
+
 
 
 
@@ -114,8 +115,8 @@ console.log(token,'token');
 
     const data = await res.json();
 console.log(data);
-    if (data.acknowledged) {
-      alert("Book added successfully ✅");
+    if (data.acknowledged) {      
+      toast.success("Book added successfully ✅");
 
       // ✅ FORM RESET
       form.reset();
@@ -125,7 +126,7 @@ console.log(data);
       alert("Failed to save ❌");
     }
   } catch (err) {
-    console.log(err);
+    
     alert("Something went wrong");
   }
 };
@@ -262,7 +263,7 @@ console.log(data);
       </span>
       <span className="text-xs text-gray-400">
         PNG, JPG up to 15MB
-      </span>
+      </span> 
 
       {error && (
         <span className="text-xs text-red-500 mt-1">{error}</span>

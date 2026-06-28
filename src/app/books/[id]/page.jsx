@@ -9,6 +9,7 @@ import Link from "next/link";
 import { LogoFacebook,  CircleNumber2, LogoTelegram, LogoLinkedin, BookOpen, ArrowLeft } from '@gravity-ui/icons';
 import { Button } from "@heroui/react";
 // import { auth } from "@/lib/auth";
+
 const BooksDetailsPage = async ({ params }) => {
   const { id } = await params;
 //  const {token} = await auth.api.getToken({

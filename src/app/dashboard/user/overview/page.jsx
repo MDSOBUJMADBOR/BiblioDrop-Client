@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
 import {
   ResponsiveContainer,
@@ -13,13 +14,19 @@ import {
 const COLORS = ["#F59E0B", "#10B981"];
 
 export default function Overview() {
+
+   const userData = authClient.useSession();  
+  const user = userData.data?.user;  
+ 
+
+
   const [chartData, setChartData] = useState([
     { name: "Pending", value: 0 },
     { name: "Delivered", value: 0 },
   ]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/delivery-requests/sorna@gmail.com")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/delivery-requests/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         const pending = data.filter(

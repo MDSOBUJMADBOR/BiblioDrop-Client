@@ -4,6 +4,7 @@ import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
 const RequestDeliveryButton = ({ book }) => {
+  console.log(book.deliveryFee,'book');
   const { data: session } =
     authClient.useSession();
      const router = useRouter();
@@ -17,7 +18,7 @@ const RequestDeliveryButton = ({ book }) => {
       return;}
 
 
-    const deliveryInfo = { 
+    const deliveryInfo = {  
       bookId: book._id,
       title: book.title,
       author: book.author,
@@ -59,12 +60,21 @@ const RequestDeliveryButton = ({ book }) => {
   };
 // bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-medium transition
   return (
-    <button
+   <form action={"/api/payment"} method="POST">
+
+<input  type="hidden"  name="deliveryFee" value={book.deliveryFee} />
+<input  type="hidden" name="title" value={book.title} />
+<input  type="hidden" name="bookid" value={book._id} />
+
+
+
+     <button type="submit"
       onClick={handleRequest}
       className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-medium transition cursor-pointer "
     >
       Request Delivery
     </button>
+   </form>
   );
 };
 
