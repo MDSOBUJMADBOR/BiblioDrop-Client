@@ -16,7 +16,7 @@ const BookCard = ({ book }) => {
     image,
     status,
   } = book;
-// console.log(book.image,'imag');
+// console.log(book.image,'imag'); 
 
 
   return (
