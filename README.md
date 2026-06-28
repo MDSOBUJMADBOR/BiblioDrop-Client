@@ -7,27 +7,17 @@ BiblioDrop is a modern full-stack web application that connects readers with loc
 ## 🚀 Live Demo
 
 ### 🌐 Live Website
-https://your-live-site-url.com
+https://biblio-drop-client-eosin.vercel.app
 
 ### 💻 Client Repository
-https://github.com/your-username/bibliodrop-client
+https://github.com/MDSOBUJMADBOR/BiblioDrop-Client
 
 ### ⚙️ Server Repository
-https://github.com/your-username/bibliodrop-server
+https://github.com/MDSOBUJMADBOR/BiblioDrop-Server
 
 ---
 
-# 👨‍💻 Admin Credentials
 
-### Email
-```
-admin@gmail.com
-```
-
-### Password
-```
-Admin@123
-```
 
 ---
 
