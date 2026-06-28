@@ -234,9 +234,9 @@ GOOGLE_CLIENT_SECRET=
 ## Clone Repository
 
 ```bash
-git clone https://github.com/your-username/bibliodrop-client.git
+https://github.com/MDSOBUJMADBOR/BiblioDrop-Client.git
 
-git clone https://github.com/your-username/bibliodrop-server.git
+https://github.com/MDSOBUJMADBOR/BiblioDrop-Server.git
 ```
 
 ---
@@ -344,7 +344,7 @@ npm run dev
 
 Email:
 ```
-admin@gmail.com
+sobujmadbor660@gmail.com
 ```
 
 ---
