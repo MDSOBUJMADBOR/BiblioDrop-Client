@@ -32,7 +32,7 @@ const BooksDetailsPage = async ({ params }) => {
     userImage,
     role
   } = book;
-console.log(userName);
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
       <Link href="/books"> <Button className="" variant="tertiary"> <ArrowLeft /> Back to All Books</Button></Link>

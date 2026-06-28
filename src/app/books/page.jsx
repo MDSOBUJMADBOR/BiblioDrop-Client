@@ -31,37 +31,7 @@ const Books = async ({ searchParams }) => {
 
 
       {/* Pagination */}
-      {/* <div className="flex justify-center mt-14">
-        <div className="bg-white border shadow-lg rounded-2xl px-4 py-3">
-          <Pagination >
-            <Pagination.Content>
-
-              <Pagination.Item>
-                <Link href={`/books?page=${page - 1}`}>
-                  <Pagination.Previous isDisabled={page === 1} />
-                </Link>
-              </Pagination.Item>
-
-              {pages.map((p) => (
-                <Pagination.Item key={p}>
-                  <Link href={`/books?page=${p}`}>
-                    <Pagination.Link isActive={p === page}>
-                      {p}
-                    </Pagination.Link>
-                  </Link>
-                </Pagination.Item>
-              ))}
-
-              <Pagination.Item>
-                <Link href={`/books?page=${page + 1}`}>
-                  <Pagination.Next isDisabled={page === totalPage} />
-                </Link>
-              </Pagination.Item>
-
-            </Pagination.Content>
-          </Pagination>
-        </div>
-      </div> */}
+     
 
 
 

@@ -10,16 +10,28 @@ export async function POST(request) {
     const headersList = await headers();
     const origin = headersList.get("origin");
 
+    // const userSession = await auth.api.getSession({
+    //   headers: await headers(),
+    // });
     const userSession = await auth.api.getSession({
-      headers: await headers(),
-    });
+  headers: await headers(),
+});
+
+if (!userSession?.user) {
+  return NextResponse.json(
+    { error: "Unauthorized" },
+    { status: 401 }
+  );
+}
+
+    console.log(userSession);
 
     const user = userSession?.user;
     const formData = await request.formData();
     const deliveryFee = formData.get('deliveryFee')
     const title = formData.get('title')
-    const productId = formData.get('productId')
-
+    // const bookid = formData.get('productId')
+ const bookid = formData.get("bookid");
     
     const session = await stripe.checkout.sessions.create({
       customer_email: user?.email,
@@ -35,13 +47,13 @@ export async function POST(request) {
           quantity: 1,
         },
       ],
-      metadata: {
-        deliveryFee: Number(deliveryFee),
-        userId: user.id,
-        userEmail: user.email,
-        title,
-        productId,
-      },
+     metadata: {
+  deliveryFee: Number(deliveryFee),
+  userId: user.id,
+  userEmail: user.email,
+  title,
+  bookid,
+},
       mode: "payment",
       success_url: `${origin}/payment?session_id={CHECKOUT_SESSION_ID}`,
     });

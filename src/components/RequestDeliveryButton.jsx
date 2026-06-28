@@ -2,21 +2,30 @@
 
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const RequestDeliveryButton = ({ book }) => {
-  console.log(book.deliveryFee,'book');
+  console.log(book._id,'book');
   const { data: session } =
     authClient.useSession();
      const router = useRouter();
 
 
-  const handleRequest = async () => {
-    alert
- if (!session?.user) {
-    alert("Please login first to request delivery.");
-      router.push("/signin");
-      return;}
+const handleSubmit = async (e) => {
+  e.preventDefault(); // Form submit বন্ধ
 
+  if (!session?.user) {
+    toast("Please login first to request delivery.");
+    router.push("/signin");
+    return;
+  }
+  // Login থাকলে form submit হবে
+  e.target.submit();
+};
+
+
+
+  const handleRequest = async () => {   
 
     const deliveryInfo = {  
       bookId: book._id,
@@ -51,7 +60,7 @@ const RequestDeliveryButton = ({ book }) => {
       const data = await res.json();
 
       if (data.insertedId) {
-        alert("Delivery Request Sent Successfully");
+        toast("Delivery Request Sent Payment");
          router.push("/books");
       }
     } catch (error) {
@@ -60,7 +69,7 @@ const RequestDeliveryButton = ({ book }) => {
   };
 // bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-medium transition
   return (
-   <form action={"/api/payment"} method="POST">
+   <form action={"/api/payment"} method="POST" onSubmit={handleSubmit}>
 
 <input  type="hidden"  name="deliveryFee" value={book.deliveryFee} />
 <input  type="hidden" name="title" value={book.title} />
