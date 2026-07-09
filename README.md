@@ -1,12 +1,20 @@
 # 📚 BiblioDrop – Online Book Delivery Management System
 
-BiblioDrop is a modern full-stack web application that connects readers with local libraries and independent book owners. Users can browse books, request doorstep delivery, securely pay delivery fees using Stripe, and track their delivery history. Librarians can manage book inventories and delivery requests, while Admin controls the entire platform.
+A modern **Full-Stack Book Delivery Management Platform** built with **Next.js, Express.js, MongoDB, Better Auth, and Stripe**. BiblioDrop connects readers with local libraries and independent book owners, allowing users to browse books, request doorstep delivery, make secure online payments, and track their delivery history through an intuitive dashboard.
 
 ---
 
-## 🚀 Live Demo
+## 📷 Project Screenshot
 
-### 🌐 Live Website
+> **Add your project screenshot here**
+
+![BiblioDrop Screenshot](./public/project-preview.png)
+
+---
+
+# 🌐 Live Demo
+
+### 🚀 Live Website
 https://biblio-drop-client-eosin.vercel.app
 
 ### 💻 Client Repository
@@ -17,20 +25,59 @@ https://github.com/MDSOBUJMADBOR/BiblioDrop-Server
 
 ---
 
+# 📖 Project Overview
 
+BiblioDrop is a complete book delivery management system designed to simplify the process of borrowing and delivering books. Readers can browse books, request deliveries, and securely pay delivery fees, while librarians manage inventories and requests. Administrators oversee users, books, transactions, and platform analytics through a powerful dashboard.
 
 ---
 
-# ✨ Key Features
+# 🛠 Technologies Used
+
+## Frontend
+
+- Next.js 16
+- React 19
+- Tailwind CSS 4
+- HeroUI
+- Framer Motion
+- GSAP
+- Recharts
+- Better Auth
+- React Toastify
+- Lucide React
+
+## Backend
+
+- Node.js
+- Express.js
+- MongoDB Atlas
+- Better Auth
+- JWT Authentication
+- Stripe API
+- ImgBB API
+
+## Database
+
+- MongoDB Atlas
+
+## Deployment
+
+- Vercel (Frontend)
+- Render / Railway (Backend)
+
+---
+
+# ✨ Core Features
 
 ## 🔐 Authentication
+
 - Better Auth Authentication
 - Email & Password Login
-- Google Login
-- JWT Authentication
+- Google Authentication
+- JWT Authorization
 - Protected Routes
-- Role Based Authorization
-- Persistent Login Session
+- Role-Based Access Control
+- Persistent User Session
 
 ---
 
@@ -39,42 +86,41 @@ https://github.com/MDSOBUJMADBOR/BiblioDrop-Server
 - Browse all published books
 - Search books by title or author
 - Filter books by category
-- View book details
-- Stripe Checkout for delivery fee
-- Delivery History
-- Dashboard Analytics
-- Wishlist Support
-- Reading List
-- Review System
-- Responsive Dashboard
+- View detailed book information
+- Secure Stripe checkout
+- Request doorstep delivery
+- Delivery history
+- Wishlist management
+- Reading list
+- Review and rating system
+- Responsive dashboard
 
 ---
 
 ## 📚 Librarian Features
 
 - Add new books
-- Upload book images using ImgBB
-- Manage Inventory
-- Edit/Delete Books
-- Manage Delivery Requests
-- Update Delivery Status
-- Dashboard Analytics
-- Earnings Statistics
+- Upload book cover images
+- Manage inventory
+- Edit and delete books
+- Handle delivery requests
+- Update delivery status
+- Dashboard analytics
+- Earnings overview
 
 ---
 
-## 🛠 Admin Features
+## 🛡️ Admin Features
 
-- Dashboard Overview
-- Manage Users
-- Change User Roles
-- Delete Users
-- Manage All Books
-- Approve Pending Books
-- Publish / Unpublish Books
-- Delete Books
-- View All Transactions
-- Analytics Charts
+- Dashboard overview
+- Manage users
+- Update user roles
+- Delete users
+- Manage all books
+- Approve pending books
+- Publish or unpublish books
+- Manage transactions
+- Platform analytics
 
 ---
 
@@ -88,127 +134,72 @@ https://github.com/MDSOBUJMADBOR/BiblioDrop-Server
 
 ---
 
-## ⭐ Challenge Features
+## ⭐ Advanced Features
 
 - Verified Review System
 - Advanced Search
 - Category Filtering
 - Fee Range Filtering
 - Availability Filtering
-- Server Side Pagination
+- Server-side Pagination
+- Animated UI using Framer Motion
 - Responsive Dashboard
-- Framer Motion Animation
 
 ---
 
-# 🛠 Tech Stack
+# 📦 Dependencies
 
-## Frontend
+## Client
 
-- Next.js 16
-- React 19
-- Tailwind CSS 4
-- HeroUI
-- Framer Motion
-- Recharts
-- Better Auth Client
-- React Toastify
-- Lucide React
-- GSAP
-
----
-
-## Backend
-
-- Node.js
-- Express.js
-- MongoDB Atlas
-- Better Auth
-- JWT
-- Stripe API
-- ImgBB API
-
----
-
-# 📦 NPM Packages Used
-
-## Frontend
-
-```json
-@better-auth/mongo-adapter
-@gravity-ui/icons
+```bash
+next
+react
+react-dom
+tailwindcss
 @heroui/react
 @heroui/styles
 better-auth
+@better-auth/mongo-adapter
 framer-motion
 gsap
 lenis
 lucide-react
-mongodb
-next
-react
-react-dom
 react-icons
 react-toastify
 recharts
 stripe
+mongodb
 ```
 
----
+## Server
 
-## Backend
-
-- express
-- cors
-- dotenv
-- mongodb
-- jsonwebtoken
-- stripe
-- better-auth
-- cookie-parser
-- bcryptjs
-
----
-
-# 📁 Folder Structure
-
-```
-client
-│
-├── app
-├── components
-├── hooks
-├── lib
-├── providers
-├── services
-├── public
-└── middleware
-
-server
-│
-├── routes
-├── controllers
-├── middleware
-├── models
-├── utils
-└── index.js
+```bash
+express
+cors
+dotenv
+mongodb
+jsonwebtoken
+stripe
+better-auth
+cookie-parser
+bcryptjs
 ```
 
 ---
 
 # 🔒 Environment Variables
 
-## Client
+## Client (.env.local)
 
 ```env
 NEXT_PUBLIC_API_URL=
+
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+
 NEXT_PUBLIC_IMGBB_API_KEY=
 ```
 
----
-
-## Server
+## Server (.env)
 
 ```env
 PORT=
@@ -218,10 +209,10 @@ DATABASE_URL=
 BETTER_AUTH_SECRET=
 BETTER_AUTH_URL=
 
+JWT_SECRET=
+
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
-
-JWT_SECRET=
 
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
@@ -229,27 +220,41 @@ GOOGLE_CLIENT_SECRET=
 
 ---
 
-# 💻 Installation
+# 💻 Run Locally
 
-## Clone Repository
+## 1️⃣ Clone Client Repository
 
 ```bash
-https://github.com/MDSOBUJMADBOR/BiblioDrop-Client.git
-
-https://github.com/MDSOBUJMADBOR/BiblioDrop-Server.git
+git clone https://github.com/MDSOBUJMADBOR/BiblioDrop-Client.git
 ```
 
----
-
-## Install Dependencies
+```bash
+cd BiblioDrop-Client
+```
 
 ```bash
 npm install
 ```
 
+```bash
+npm run dev
+```
+
 ---
 
-## Run Client
+## 2️⃣ Clone Server Repository
+
+```bash
+git clone https://github.com/MDSOBUJMADBOR/BiblioDrop-Server.git
+```
+
+```bash
+cd BiblioDrop-Server
+```
+
+```bash
+npm install
+```
 
 ```bash
 npm run dev
@@ -257,80 +262,101 @@ npm run dev
 
 ---
 
-## Run Server
+# 📁 Project Structure
 
-```bash
-npm run dev
+```
+BiblioDrop-Client/
+│
+├── app/
+├── components/
+├── hooks/
+├── lib/
+├── providers/
+├── services/
+├── public/
+└── middleware/
+
+BiblioDrop-Server/
+│
+├── controllers/
+├── middleware/
+├── models/
+├── routes/
+├── utils/
+└── index.js
 ```
 
 ---
 
 # 📱 Responsive Design
 
-- Mobile
-- Tablet
-- Desktop
-- Large Screens
+- 📱 Mobile
+- 💻 Tablet
+- 🖥 Desktop
+- 🖥 Large Screen Support
 
 ---
 
 # 🔐 Security
 
 - JWT Protected APIs
-- Better Auth Session
+- Better Auth Session Management
 - Password Hashing
 - Secure Cookies
 - Environment Variables
 - MongoDB Atlas Security
-- Stripe Secure Payment
+- Stripe Secure Payment Processing
 
 ---
 
 # 📊 Dashboard
 
-### User Dashboard
+### 👤 User Dashboard
 
 - Overview
 - Delivery History
 - Reading List
+- Wishlist
 - Reviews
 
-### Librarian Dashboard
+### 📚 Librarian Dashboard
 
 - Overview
-- Add Book
-- Inventory
-- Deliveries
+- Add Books
+- Inventory Management
+- Delivery Requests
+- Earnings
 
-### Admin Dashboard
+### 🛡️ Admin Dashboard
 
 - Overview
-- Manage Users
-- Manage Books
+- User Management
+- Book Management
 - Transactions
+- Analytics
 
 ---
 
-# 🎨 UI Features
+# 🎨 UI Highlights
 
-- Modern Design
-- Responsive Layout
+- Modern Responsive Design
 - Hero Banner
+- Interactive Cards
 - Skeleton Loading
+- Toast Notifications
+- Framer Motion Animations
 - Custom 404 Page
 - Error Boundary
-- Toast Notifications
-- Animated Components
-- Interactive Cards
+- Smooth Page Transitions
 
 ---
 
-# 📌 Future Improvements
+# 🚀 Future Improvements
 
 - Email Verification
 - Push Notifications
-- Real-time Delivery Tracking
-- Chat Between User & Librarian
+- Real-Time Delivery Tracking
+- Chat Between Readers & Librarians
 - PDF Book Preview
 - AI Book Recommendation
 - Dark Mode
@@ -338,21 +364,32 @@ npm run dev
 
 ---
 
+# 🔗 Resources
+
+- 🌐 Live Website: https://biblio-drop-client-eosin.vercel.app
+- 💻 Client Repository: https://github.com/MDSOBUJMADBOR/BiblioDrop-Client
+- ⚙️ Server Repository: https://github.com/MDSOBUJMADBOR/BiblioDrop-Server
+
+---
+
 # 👨‍💻 Developer
 
-**Sobuj Madbor**
+**MD Sobuj Madbor**
 
-Email:
-```
-sobujmadbor660@gmail.com
-```
+- 📧 Email: mdsobujmadbor660@gmail.com
+- 📍 Location: Dhaka, Bangladesh
+- 🌐 Portfolio: https://sobuj-madbor-portflio.vercel.app
 
 ---
 
 # 📄 License
 
-This project is created for educational purposes as part of the Programming Hero Level-2 Assignment.
+This project was developed for educational purposes as part of the **Programming Hero Level-2 Assignment**.
 
 ---
 
-⭐ If you like this project, don't forget to give it a star!
+## ⭐ Support
+
+If you found this project helpful, please consider giving it a **⭐ Star** on GitHub.
+
+Made with ❤️ by **MD Sobuj Madbor**
