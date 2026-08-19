@@ -1,4 +1,4 @@
-# 📚 BiblioDrop – Online Book Delivery Management System
+ # 📚 BiblioDrop – Online Book Delivery Management System
 
 A modern **Full-Stack Book Delivery Management Platform** built with **Next.js, Express.js, MongoDB, Better Auth, and Stripe**. BiblioDrop connects readers with local libraries and independent book owners, allowing users to browse books, request doorstep delivery, make secure online payments, and track their delivery history through an intuitive dashboard.
 
@@ -84,6 +84,7 @@ BiblioDrop is a complete book delivery management system designed to simplify th
 
 ---
 
+
 ## 👤 User Features
 
 - Browse all published books
@@ -123,7 +124,6 @@ BiblioDrop is a complete book delivery management system designed to simplify th
 - Approve pending books
 - Publish or unpublish books
 - Manage transactions
-- Platform analytics
 
 ---
 
