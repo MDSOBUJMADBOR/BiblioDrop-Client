@@ -1,29 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import BookCard from "./BookCard";
 
-const SearchFilter = ({ books }) => {
-  const [filteredBooks, setFilteredBooks] = useState(books);
+const SearchFilter = ({ books = [] }) => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
 
-  useEffect(() => {
+  const filteredBooks = useMemo(() => {
     let temp = [...books];
 
-    if (search) {
+    if (search.trim()) {
+      const searchText = search.toLowerCase();
+
       temp = temp.filter(
         (book) =>
-          book.title.toLowerCase().includes(search.toLowerCase()) ||
-          book.author.toLowerCase().includes(search.toLowerCase())
+          book.title?.toLowerCase().includes(searchText) ||
+          book.author?.toLowerCase().includes(searchText)
       );
     }
 
     if (category !== "all") {
-      temp = temp.filter((book) => book.category === category);
+      temp = temp.filter(
+        (book) => book.category?.toLowerCase() === category.toLowerCase()
+      );
     }
 
-    setFilteredBooks(temp);
+    return temp;
   }, [books, search, category]);
 
   return (
