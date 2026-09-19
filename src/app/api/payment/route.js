@@ -24,7 +24,7 @@ if (!userSession?.user) {
   );
 }
 
-    console.log(userSession);
+
 
     const user = userSession?.user;
     const formData = await request.formData();
@@ -59,7 +59,7 @@ if (!userSession?.user) {
     });
     return NextResponse.redirect(session.url, 303);
   } catch (err) {
-    console.log(err);
+    
     return NextResponse.json(
       { error: err.message },
       { status: err.statusCode || 500 },

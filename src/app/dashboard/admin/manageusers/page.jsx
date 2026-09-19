@@ -46,7 +46,7 @@ export default function ManageUsers() {
 
   // ✅ Role change — v3 Dropdown.Menu fires onAction with the item's `id`
   const handleRoleChange = async (id, role) => {
-    console.log(id, role);
+    
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },

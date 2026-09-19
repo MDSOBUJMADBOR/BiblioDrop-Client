@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Table, Button, Chip } from "@heroui/react";
 
+const FALLBACK_DATE = "1970-01-01";
+
 export default function BookApprovalQueue() {
   const [books, setBooks] = useState([]);
 
@@ -11,31 +13,34 @@ export default function BookApprovalQueue() {
     direction: "ascending",
   });
 
-  // ✅ Fetch books
+  // ================= FETCH BOOKS =================
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost`)  
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost`)
       .then((res) => res.json())
-      .then((data) => setBooks(data));
+      .then((data) => setBooks(data))
+      .catch((error) => {
+        alert.error("Failed to fetch books:", error);
+      });
   }, []);
 
-  // ✅ Sorting
+  // ================= SORTING =================
   const sortedBooks = useMemo(() => {
     return [...books].sort((a, b) => {
       const col = sortDescriptor.column;
 
       let first =
         col === "date"
-          ? new Date(a.createdAt || 0)
+          ? new Date(a.createdAt || FALLBACK_DATE)
           : String(a[col] || "");
 
       let second =
         col === "date"
-          ? new Date(b.createdAt || 0)
+          ? new Date(b.createdAt || FALLBACK_DATE)
           : String(b[col] || "");
 
       let cmp =
         first instanceof Date
-          ? first - second
+          ? first.getTime() - second.getTime()
           : first.localeCompare(second);
 
       if (sortDescriptor.direction === "descending") {
@@ -46,41 +51,68 @@ export default function BookApprovalQueue() {
     });
   }, [books, sortDescriptor]);
 
-  // ✅ DELETE
+  // ================= DELETE =================
   const handleDelete = async (id) => {
     if (!confirm("Are you sure?")) return;
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost/${id}`, {
-      method: "DELETE",
-    });
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/bookpost/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (data.deletedCount > 0) {
-      setBooks((prev) => prev.filter((b) => b._id !== id));
+      if (data.deletedCount > 0) {
+        setBooks((prev) =>
+          prev.filter((book) => book._id !== id)
+        );
+      }
+    } catch (error) {
+      alert.error("Delete Error:", error);
     }
   };
 
-  // ✅ TOGGLE STATUS (MAIN FIX 🔥)
+  // ================= TOGGLE STATUS =================
   const handleToggleStatus = async (id, currentStatus) => {
     const newStatus =
       currentStatus === "publish" ? "unpublish" : "publish";
-// NEXT_PUBLIC_API_URL
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: newStatus }),
-    });
 
-    const data = await res.json();
-
-    if (data.modifiedCount > 0) {
-      setBooks((prev) =>
-        prev.map((b) =>
-          b._id === id ? { ...b, status: newStatus } : b
-        )
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/bookpost/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            status: newStatus,
+          }),
+        }
       );
+
+      const data = await res.json();
+
+      if (data.modifiedCount > 0) {
+        setBooks((prev) =>
+          prev.map((book) =>
+            book._id === id
+              ? { ...book, status: newStatus }
+              : book
+          )
+        );
+      }
+    } catch (error) {
+      alert.error("Status Update Error:", error);
     }
+  };
+
+  // ================= DATE FORMATTER =================
+  const formatDate = (date) => {
+    return new Date(date || FALLBACK_DATE).toLocaleDateString();
   };
 
   return (
@@ -96,16 +128,19 @@ export default function BookApprovalQueue() {
             key={book._id}
             className="border rounded-xl p-4 shadow-sm bg-white"
           >
-            <h3 className="font-semibold">{book.title}</h3>
-            <p className="text-sm text-gray-500">{book.author}</p>
+            <h3 className="font-semibold">
+              {book.title}
+            </h3>
+
+            <p className="text-sm text-gray-500">
+              {book.author}
+            </p>
 
             <div className="text-sm mt-2">
               <p>📧 {book.email}</p>
+
               <p>
-                📅{" "}
-                {new Date(
-                  book.createdAt || Date.now()
-                ).toLocaleDateString()}
+                📅 {formatDate(book.createdAt)}
               </p>
             </div>
 
@@ -123,7 +158,7 @@ export default function BookApprovalQueue() {
             </div>
 
             <div className="flex gap-2 mt-3">
-              {/* ✅ TOGGLE BUTTON */}
+              {/* TOGGLE BUTTON */}
               <Button
                 fullWidth
                 color={
@@ -143,6 +178,7 @@ export default function BookApprovalQueue() {
                   : "Publish"}
               </Button>
 
+              {/* DELETE BUTTON */}
               <Button
                 className="bg-red-500"
                 fullWidth
@@ -168,17 +204,27 @@ export default function BookApprovalQueue() {
               onSortChange={setSortDescriptor}
             >
               <Table.Header>
-                <Table.Column allowsSorting id="title">
+                <Table.Column
+                  allowsSorting
+                  id="title"
+                >
                   {({ sortDirection }) => (
-                    <Table.SortableColumnHeader sortDirection={sortDirection}>
+                    <Table.SortableColumnHeader
+                      sortDirection={sortDirection}
+                    >
                       Title
                     </Table.SortableColumnHeader>
                   )}
                 </Table.Column>
 
-                <Table.Column allowsSorting id="author">
+                <Table.Column
+                  allowsSorting
+                  id="author"
+                >
                   {({ sortDirection }) => (
-                    <Table.SortableColumnHeader sortDirection={sortDirection}>
+                    <Table.SortableColumnHeader
+                      sortDirection={sortDirection}
+                    >
                       Author
                     </Table.SortableColumnHeader>
                   )}
@@ -188,9 +234,14 @@ export default function BookApprovalQueue() {
                   Librarian
                 </Table.Column>
 
-                <Table.Column allowsSorting id="date">
+                <Table.Column
+                  allowsSorting
+                  id="date"
+                >
                   {({ sortDirection }) => (
-                    <Table.SortableColumnHeader sortDirection={sortDirection}>
+                    <Table.SortableColumnHeader
+                      sortDirection={sortDirection}
+                    >
                       Date
                     </Table.SortableColumnHeader>
                   )}
@@ -208,14 +259,20 @@ export default function BookApprovalQueue() {
               <Table.Body>
                 {sortedBooks.map((book) => (
                   <Table.Row key={book._id}>
-                    <Table.Cell>{book.title}</Table.Cell>
-                    <Table.Cell>{book.author}</Table.Cell>
-                    <Table.Cell>{book.email}</Table.Cell>
+                    <Table.Cell>
+                      {book.title}
+                    </Table.Cell>
 
                     <Table.Cell>
-                      {new Date(
-                        book.createdAt || Date.now()
-                      ).toLocaleDateString()}
+                      {book.author}
+                    </Table.Cell>
+
+                    <Table.Cell>
+                      {book.email}
+                    </Table.Cell>
+
+                    <Table.Cell>
+                      {formatDate(book.createdAt)}
                     </Table.Cell>
 
                     <Table.Cell>
@@ -232,7 +289,7 @@ export default function BookApprovalQueue() {
                     </Table.Cell>
 
                     <Table.Cell className="flex gap-2">
-                      {/* ✅ TOGGLE BUTTON */}
+                      {/* TOGGLE BUTTON */}
                       <Button
                         size="sm"
                         color={
@@ -252,6 +309,7 @@ export default function BookApprovalQueue() {
                           : "Publish"}
                       </Button>
 
+                      {/* DELETE BUTTON */}
                       <Button
                         size="sm"
                         className="bg-red-500"
