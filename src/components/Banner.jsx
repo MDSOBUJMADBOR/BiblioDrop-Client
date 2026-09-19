@@ -170,7 +170,7 @@ const HeroBanner = () => {
   const Icon = slide.icon;
 
   return (
-    <section className="w-full px-0 sm:px-4 lg:px-6">
+    <section className="w-full px-0 sm:px-4 lg:px-6 ">
       <div className="relative mx-auto w-full max-w-7xl overflow-hidden rounded-none bg-slate-950 ">
         {/* =====================================================
             BACKGROUND
