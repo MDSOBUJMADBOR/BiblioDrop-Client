@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 const RequestDeliveryButton = ({ book }) => {
-  console.log(book._id,'book');
+ 
   const { data: session } =
     authClient.useSession();
      const router = useRouter();
@@ -64,7 +64,7 @@ const handleSubmit = async (e) => {
          router.push("/books");
       }
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 // bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-medium transition

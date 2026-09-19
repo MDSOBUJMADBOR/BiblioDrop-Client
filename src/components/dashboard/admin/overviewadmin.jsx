@@ -31,7 +31,7 @@ export default function AdminOverview() {
         setBooksCount(books?.length || 0);
         setDeliveriesCount(deliveries?.length || 0);
       } catch (error) {
-        console.log("Error fetching dashboard data:", error);
+        alert("Error fetching dashboard data:", error);
       }
     };
 
