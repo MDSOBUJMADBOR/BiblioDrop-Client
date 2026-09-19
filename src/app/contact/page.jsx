@@ -14,20 +14,43 @@ import {
   ChevronRight,
   CheckCircle2,
 } from "lucide-react";
+import { toast } from "react-toastify";
 
 const ContactUsPage = () => {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-    setSubmitted(true);
+  // Get all form data
+  const formData = new FormData(e.currentTarget);
 
-    setTimeout(() => {
-      setSubmitted(false);
-    }, 4000);
+  const data = {
+    name: formData.get("name"),
+    email: formData.get("email"),
+    subject: formData.get("subject"),
+    message: formData.get("message"),
   };
 
+  // Show submitted data in console
+  toast.success("Message sent successfully!", data);
+
+  // Show success message
+  setSubmitted(true);
+
+  // Reset all form fields
+  e.currentTarget.reset();
+
+  // Hide success message after 4 seconds
+  setTimeout(() => {
+    setSubmitted(false);
+  }, 4000);
+};
+
+
+
+
+  
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
       {/* ================= HERO ================= */}
@@ -221,126 +244,208 @@ const ContactUsPage = () => {
               </div>
             )}
 
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-6"
-            >
-              {/* Name + Email */}
-              <div className="grid gap-6 sm:grid-cols-2">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="mb-2 block text-sm font-semibold text-slate-700"
-                  >
-                    Full Name
-                  </label>
+<form
+  onSubmit={handleSubmit}
+  className="space-y-6"
+>
+  {/* Name + Email */}
+  <div className="grid gap-6 sm:grid-cols-2">
+    <div>
+      <label
+        htmlFor="name"
+        className="mb-2 block text-sm font-semibold text-slate-700"
+      >
+        Full Name
+      </label>
 
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    placeholder="Enter your name"
-                    required
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
-                  />
-                </div>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        placeholder="Enter your name"
+        required
+        className="
+          w-full
+          rounded-xl
+          border
+          border-slate-200
+          bg-slate-50
+          px-4
+          py-3.5
+          text-sm
+          outline-none
+          transition
+          placeholder:text-slate-400
+          focus:border-blue-500
+          focus:bg-white
+          focus:ring-4
+          focus:ring-blue-500/10
+        "
+      />
+    </div>
 
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="mb-2 block text-sm font-semibold text-slate-700"
-                  >
-                    Email Address
-                  </label>
+    <div>
+      <label
+        htmlFor="email"
+        className="mb-2 block text-sm font-semibold text-slate-700"
+      >
+        Email Address
+      </label>
 
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    required
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
-                  />
-                </div>
-              </div>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        placeholder="you@example.com"
+        required
+        className="
+          w-full
+          rounded-xl
+          border
+          border-slate-200
+          bg-slate-50
+          px-4
+          py-3.5
+          text-sm
+          outline-none
+          transition
+          placeholder:text-slate-400
+          focus:border-blue-500
+          focus:bg-white
+          focus:ring-4
+          focus:ring-blue-500/10
+        "
+      />
+    </div>
+  </div>
 
-              {/* Subject */}
-              <div>
-                <label
-                  htmlFor="subject"
-                  className="mb-2 block text-sm font-semibold text-slate-700"
-                >
-                  Subject
-                </label>
+  {/* Subject */}
+  <div>
+    <label
+      htmlFor="subject"
+      className="mb-2 block text-sm font-semibold text-slate-700"
+    >
+      Subject
+    </label>
 
-                <select
-                  id="subject"
-                  name="subject"
-                  required
-                  defaultValue=""
-                  className="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
-                >
-                  <option
-                    value=""
-                    disabled
-                  >
-                    Select a subject
-                  </option>
+    <select
+      id="subject"
+      name="subject"
+      required
+      defaultValue=""
+      className="
+        w-full
+        appearance-none
+        rounded-xl
+        border
+        border-slate-200
+        bg-slate-50
+        px-4
+        py-3.5
+        text-sm
+        outline-none
+        transition
+        focus:border-blue-500
+        focus:bg-white
+        focus:ring-4
+        focus:ring-blue-500/10
+      "
+    >
+      <option value="" disabled>
+        Select a subject
+      </option>
 
-                  <option value="book">
-                    Book Inquiry
-                  </option>
+      <option value="book">
+        Book Inquiry
+      </option>
 
-                  <option value="delivery">
-                    Delivery Support
-                  </option>
+      <option value="delivery">
+        Delivery Support
+      </option>
 
-                  <option value="account">
-                    Account Help
-                  </option>
+      <option value="account">
+        Account Help
+      </option>
 
-                  <option value="payment">
-                    Payment Issue
-                  </option>
+      <option value="payment">
+        Payment Issue
+      </option>
 
-                  <option value="feedback">
-                    Feedback
-                  </option>
+      <option value="feedback">
+        Feedback
+      </option>
 
-                  <option value="other">
-                    Other
-                  </option>
-                </select>
-              </div>
+      <option value="other">
+        Other
+      </option>
+    </select>
+  </div>
 
-              {/* Message */}
-              <div>
-                <label
-                  htmlFor="message"
-                  className="mb-2 block text-sm font-semibold text-slate-700"
-                >
-                  Your Message
-                </label>
+  {/* Message */}
+  <div>
+    <label
+      htmlFor="message"
+      className="mb-2 block text-sm font-semibold text-slate-700"
+    >
+      Your Message
+    </label>
 
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={6}
-                  placeholder="Tell us how we can help you..."
-                  required
-                  className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
-                />
-              </div>
+    <textarea
+      id="message"
+      name="message"
+      rows={6}
+      placeholder="Tell us how we can help you..."
+      required
+      className="
+        w-full
+        resize-none
+        rounded-xl
+        border
+        border-slate-200
+        bg-slate-50
+        px-4
+        py-3.5
+        text-sm
+        outline-none
+        transition
+        placeholder:text-slate-400
+        focus:border-blue-500
+        focus:bg-white
+        focus:ring-4
+        focus:ring-blue-500/10
+      "
+    />
+  </div>
 
-              {/* Submit */}
-              <button
-                type="submit"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-950 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-500/20 sm:w-auto"
-              >
-                <Send size={17} />
-                Send Message
-              </button>
-            </form>
+  {/* Submit */}
+  <button
+    type="submit"
+    className="
+      inline-flex
+      w-full
+      items-center
+      justify-center
+      gap-2
+      rounded-xl
+      bg-slate-950
+      px-6
+      py-3.5
+      text-sm
+      font-semibold
+      text-white
+      transition
+      hover:bg-blue-600
+      focus:outline-none
+      focus:ring-4
+      focus:ring-blue-500/20
+      sm:w-auto
+    "
+  >
+    <Send size={17} />
+
+    Send Message
+  </button>
+</form>
           </div>
 
           {/* ================= SIDE CARD ================= */}
