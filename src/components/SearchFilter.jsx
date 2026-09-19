@@ -1,21 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import BookCard from "./BookCard";
 
 const SearchFilter = ({ books }) => {
-  const [filteredBooks, setFilteredBooks] = useState(books);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
 
-  useEffect(() => {
+  const filteredBooks = useMemo(() => {
     let temp = [...books];
 
-    if (search) {
+    if (search.trim()) {
+      const searchText = search.toLowerCase();
+
       temp = temp.filter(
         (book) =>
-          book.title.toLowerCase().includes(search.toLowerCase()) ||
-          book.author.toLowerCase().includes(search.toLowerCase())
+          book.title?.toLowerCase().includes(searchText) ||
+          book.author?.toLowerCase().includes(searchText)
       );
     }
 
@@ -23,11 +24,12 @@ const SearchFilter = ({ books }) => {
       temp = temp.filter((book) => book.category === category);
     }
 
-    setFilteredBooks(temp);
+    return temp;
   }, [books, search, category]);
 
   return (
     <>
+      {/* Search & Filter */}
       <div className="grid md:grid-cols-2 gap-4 mb-8">
         <input
           type="text"
@@ -51,6 +53,7 @@ const SearchFilter = ({ books }) => {
         </select>
       </div>
 
+      {/* Books */}
       {filteredBooks.length === 0 ? (
         <div className="text-center py-20 text-gray-500">
           No books found.
