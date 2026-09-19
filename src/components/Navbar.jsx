@@ -29,7 +29,14 @@ text: "Home"
  {
 path: "/books",
 text: "Browse Books"
- },
+ },{
+  path: "/contact",
+  text: "Contact Us"
+ },{
+  path: "/about",
+  text: "/About Us"
+ }
+
 ]
 // bg-gradient-to-r from-[#0b1d3a] to-[#0f2a5c]
 export default function Navbar() {
@@ -88,6 +95,8 @@ await authClient.signOut();
         <div className="hidden md:flex gap-6 items-center">
           <Link href="/" className={isActive("/") ? "text-yellow-400" : ""}>Home</Link>
           <Link href="/books" className={isActive("/books") ? "text-yellow-400" : ""}>Browse Books</Link>
+          <Link href="/contact" className={isActive("/contact") ? "text-yellow-400" : ""}>Contact Us</Link>
+          <Link href="/about" className={isActive("/about") ? "text-yellow-400" : ""}>About Us</Link>
 
 
 
