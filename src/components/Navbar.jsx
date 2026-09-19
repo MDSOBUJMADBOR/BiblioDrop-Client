@@ -35,11 +35,11 @@ text: "Browse Books"
 export default function Navbar() {
 const { data: session } = useSession(); 
   const role = session?.user?.role;
-// console.log(role,'role');
+
 
   const userData = authClient.useSession();  
 const user = userData.data?.user;  
-// console.log(user,'user');
+
   const pathname = usePathname();
 
   const [open, setOpen] = useState(false);
@@ -207,10 +207,10 @@ await authClient.signOut();
 
          {!user && (<div className="flex flex-row gap-4">
            <Button className="bg-yellow-400 text-black px-4 py-1 rounded flex items-center gap-2">
-            <Link href={'/signin'}><div className="flex gap-4"><LogOut size={16} /> Login</div></Link>  
+            <Link href={'/signin'}><div className="flex gap-4"> Login</div></Link>  
           </Button>
           <Button className="bg-yellow-400 text-black px-4 py-1 rounded flex items-center gap-2">
-           <Link href={'/signup'}><div className="flex gap-4"><LogOut size={16} /> Register</div></Link> 
+           <Link href={'/signup'}><div className="flex gap-4"> Register</div></Link> 
           </Button>
           </div>)}
         
