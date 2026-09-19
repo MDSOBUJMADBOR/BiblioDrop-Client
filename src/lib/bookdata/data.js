@@ -16,7 +16,7 @@ export const FeaturedData = async () => {
 
 
 
-export const getProduct = async (page) => {
+export const getProduct = async (page) => { 
       if (!page) {
     page = 1;
   }
