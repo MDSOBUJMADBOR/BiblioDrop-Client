@@ -15,7 +15,7 @@ import { SquarePen } from "lucide-react";
 import { redirect } from "next/navigation";
 
 const EditModal = ({ book }) => {
-// console.log(book,'book');
+
 const {_id,title,author,category,deliveryFee,description,status} = book;
 
 
@@ -33,7 +33,7 @@ const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost/${_id}` , {
   body: JSON.stringify(item)
 })
 const data = await res.json(); 
-// console.log(data,'data');
+
 
  // ✅ success check
   if (data.modifiedCount > 0) {

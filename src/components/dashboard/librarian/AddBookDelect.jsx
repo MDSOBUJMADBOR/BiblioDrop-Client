@@ -5,9 +5,9 @@ import { redirect } from 'next/navigation';
 import React from 'react';
 
 const AddBookDelect = ({user}) => {
-    console.log(user,'user');
+   
 const {_id} = user;
-console.log(user,'userlist');
+
 
  const handleDelete = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost/${_id}`, {
@@ -19,7 +19,7 @@ console.log(user,'userlist');
     });
     const data = await res.json();
     redirect('/dashboard/librarian/addbook')
-    // console.log(data,'data');
+    
   };
 
           return (
