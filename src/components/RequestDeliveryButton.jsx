@@ -38,8 +38,8 @@ const handleSubmit = async (e) => {
       description: book.description,
       createdAt: book.createdAt,
 
-       requesterName: session.user.name,
-      requesterEmail: session.user.email,
+       requesterName: session?.user?.name,
+      requesterEmail: session?.user?.email,
 
       status: "pending",
       requestDate: new Date(),
@@ -59,10 +59,10 @@ const handleSubmit = async (e) => {
 
       const data = await res.json();
 
-      if (data.insertedId) {
-        toast("Delivery Request Sent Payment");
-         router.push("/books");
-      }
+      // if (data.insertedId) {
+      //   toast("Delivery Request Sent Payment");
+      //    router.push("/books");
+      // }
     } catch (error) {
       alert(error);
     }

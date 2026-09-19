@@ -3,19 +3,162 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import {
+  LibraryBig,
+  Mail,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
+
+const fallbackImage = "https://i.ibb.co/4pDNDk1/avatar.png";
+
+/* =====================================================
+   Librarian Card
+===================================================== */
+
+const LibrarianCard = ({ librarian }) => {
+  return (
+    <div className="group relative w-[280px] shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_30px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-[0_15px_40px_rgba(79,70,229,0.14)] sm:w-[310px]">
+      {/* Decorative Glow */}
+      <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-indigo-500/10 blur-3xl transition-all duration-500 group-hover:bg-indigo-500/20" />
+
+      {/* Card Content */}
+      <div className="relative flex items-center gap-4">
+        {/* Avatar */}
+        <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-sm">
+          <Image
+            src={librarian.image || fallbackImage}
+            alt={librarian.name || "Librarian"}
+            fill
+            sizes="64px"
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+
+          {/* Online Indicator */}
+          <span className="absolute bottom-1 right-1 h-3 w-3 rounded-full border-2 border-white bg-emerald-500" />
+        </div>
+
+        {/* Information */}
+        <div className="min-w-0 flex-1">
+          <h3 className="truncate text-base font-bold text-slate-900">
+            {librarian.name || "Unknown Librarian"}
+          </h3>
+
+          <div className="mt-1 flex items-center gap-1.5">
+            <Mail className="h-3.5 w-3.5 shrink-0 text-slate-400" />
+
+            <p className="truncate text-xs text-slate-500">
+              {librarian.email || "No email available"}
+            </p>
+          </div>
+
+          {/* Role */}
+          <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-indigo-50 px-2.5 py-1">
+            <ShieldCheck className="h-3.5 w-3.5 text-indigo-600" />
+
+            <span className="text-[11px] font-semibold capitalize text-indigo-600">
+              {librarian.role || "Librarian"}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="mt-5 h-px w-full bg-slate-100" />
+
+      {/* Bottom Info */}
+      <div className="mt-3 flex items-center justify-between">
+        <span className="text-xs font-medium text-slate-400">
+          BiblioDrop Librarian
+        </span>
+
+        <span className="flex items-center gap-1 text-xs font-medium text-emerald-600">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+          Available
+        </span>
+      </div>
+    </div>
+  );
+};
+
+/* =====================================================
+   Marquee Row
+===================================================== */
+
+const MarqueeRow = ({ librarians, reverse = false }) => {
+  /*
+    Duplicate the librarians.
+
+    Example:
+    [A, B, C]
+    becomes
+    [A, B, C, A, B, C]
+
+    This allows the second copy to enter
+    while the first copy leaves the screen.
+  */
+
+  const items = [...librarians, ...librarians];
+
+  return (
+    <div className="relative w-full overflow-hidden">
+      <motion.div
+        className="flex w-max gap-5"
+        initial={{
+          x: reverse ? "-50%" : "0%",
+        }}
+        animate={{
+          x: reverse ? "0%" : "-50%",
+        }}
+        transition={{
+          duration: reverse ? 32 : 28,
+          ease: "linear",
+          repeat: Infinity,
+          repeatType: "loop",
+        }}
+        whileHover={{
+          animationPlayState: "paused",
+        }}
+      >
+        {items.map((librarian, index) => (
+          <LibrarianCard
+            key={`${librarian._id || librarian.email}-${index}`}
+            librarian={librarian}
+          />
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+/* =====================================================
+   Main Librarian Component
+===================================================== */
 
 export default function Librarian() {
   const [librarians, setLibrarians] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  /* =====================================================
+     Fetch Librarians
+  ===================================================== */
+
   useEffect(() => {
     const getLibrarians = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/librarians`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/librarians`,
+        );
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch librarians");
+        }
+
         const data = await res.json();
-        setLibrarians(data); 
+
+        setLibrarians(Array.isArray(data) ? data : []);
       } catch (error) {
-        alert.error(error);
+        console.error("Librarian fetch error:", error);
       } finally {
         setLoading(false);
       }
@@ -24,110 +167,161 @@ export default function Librarian() {
     getLibrarians();
   }, []);
 
+  /* =====================================================
+     Loading State
+  ===================================================== */
+
   if (loading) {
     return (
-      <div className="text-center py-10 text-lg font-semibold">
-        Loading...
-      </div>
+      <section className="bg-slate-50 px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          {/* Heading Skeleton */}
+          <div className="mb-10 text-center">
+            <div className="mx-auto h-7 w-48 animate-pulse rounded-lg bg-slate-200 sm:h-8" />
+
+            <div className="mx-auto mt-3 h-4 w-72 max-w-full animate-pulse rounded bg-slate-200" />
+          </div>
+
+          {/* Card Skeleton */}
+          <div className="flex gap-5 overflow-hidden">
+            {[1, 2, 3, 4].map((item) => (
+              <div
+                key={item}
+                className="h-[150px] w-[280px] shrink-0 animate-pulse rounded-2xl bg-white shadow-sm sm:w-[310px]"
+              />
+            ))}
+          </div>
+        </div>
+      </section>
     );
   }
 
+  /* =====================================================
+     Empty State
+  ===================================================== */
+
+  if (!librarians.length) {
+    return (
+      <section className="bg-slate-50 px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="rounded-3xl border border-slate-200 bg-white px-6 py-12 text-center shadow-sm">
+            <LibraryBig className="mx-auto h-10 w-10 text-slate-400" />
+
+            <h2 className="mt-4 text-xl font-bold text-slate-900">
+              No librarians found
+            </h2>
+
+            <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
+              Librarian information will appear here when available.
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  /* =====================================================
+     Main UI
+  ===================================================== */
+
   return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="max-w-7xl mx-auto py-2 pb-10 bg-[#e2e8f0]"
-    >
-      <motion.h1
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{
-          duration: 0.5,
-        }}
-        className="text-2xl font-bold py-3"
-      >
-        Librarian
-      </motion.h1>
+    <section className="relative overflow-hidden bg-slate-50 px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
+      {/* Background Decoration */}
+      <div className="pointer-events-none absolute -left-32 top-10 h-72 w-72 rounded-full bg-indigo-200/30 blur-3xl" />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        {librarians.map((librarian, index) => (
-          <motion.div
-            key={librarian._id}
-            initial={{
-              opacity: 0,
-              y: 30,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{ once: true }}
-            transition={{
-              delay: index * 0.1,
-              type: "spring",
-              stiffness: 200,
-              damping: 18,
-            }}
-            whileHover={{
-              y: -10,
-              scale: 1.05,
-            }}
-            className="group flex items-center gap-4 bg-white border border-[#e2e8f0] rounded-2xl p-5 shadow-[0_4px_20px_-4px_rgba(148,163,184,0.12)] hover:shadow-xl transition-all duration-500"
-          >
-            {/* Avatar */}
-            <motion.div
-              whileHover={{
-                scale: 1.12,
-                rotate: 5,
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-              }}
-              className="relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-full"
-            >
-              <Image
-                src={
-                  librarian.image ||
-                  "https://i.ibb.co/4pDNDk1/avatar.png"
-                }
-                alt={librarian.name}
-                fill
-                className="rounded-full object-cover border border-slate-100 group-hover:scale-110 transition-transform duration-700"
-              />
-            </motion.div>
+      <div className="pointer-events-none absolute -bottom-32 -right-32 h-80 w-80 rounded-full bg-blue-200/30 blur-3xl" />
 
-            {/* Info */}
-            <div className="flex flex-col justify-center">
-              <motion.h3
-                whileHover={{ scale: 1.05 }}
-                className="text-[#1e293b] font-bold text-base tracking-wide"
-              >
-                {librarian.name}
-              </motion.h3>
+      <div className="relative mx-auto max-w-7xl">
+        {/* =================================================
+            Section Header
+        ================================================= */}
 
-              <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: index * 0.1 + 0.2 }}
-                className="text-[#94a3b8] text-sm mt-1"
-              >
-                {librarian.email}
-              </motion.p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+          transition={{
+            duration: 0.5,
+          }}
+          className="mx-auto mb-9 max-w-2xl text-center sm:mb-11"
+        >
+          {/* Badge */}
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-3.5 py-1.5 text-xs font-semibold text-indigo-600">
+            <Sparkles className="h-3.5 w-3.5" />
 
-              <motion.p
-                whileHover={{ x: 4 }}
-                className="text-sm font-medium text-blue-600 capitalize mt-1"
-              >
-                {librarian.role}
-              </motion.p>
-            </div>
-          </motion.div>
-        ))}
+            Meet Our Librarians
+          </div>
+
+          {/* Heading */}
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
+            The People Behind{" "}
+            <span className="text-indigo-600">
+              Your Books
+            </span>
+          </h2>
+
+          {/* Description */}
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-500 sm:text-base">
+            Meet our trusted librarians who help readers discover,
+            request, and receive their favorite books.
+          </p>
+        </motion.div>
+
+        {/* =================================================
+            Marquee
+        ================================================= */}
+
+        <div className="relative">
+          {/* Left Fade */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-12 bg-gradient-to-r from-slate-50 to-transparent sm:w-20 lg:w-32" />
+
+          {/* Right Fade */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-12 bg-gradient-to-l from-slate-50 to-transparent sm:w-20 lg:w-32" />
+
+          {/* Row 1 */}
+          <MarqueeRow librarians={librarians} />
+
+          {/* Row 2 */}
+          <div className="mt-5">
+            <MarqueeRow
+              librarians={librarians}
+              reverse={true}
+            />
+          </div>
+        </div>
+
+        {/* =================================================
+            Bottom Text
+        ================================================= */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+          }}
+          whileInView={{
+            opacity: 1,
+          }}
+          viewport={{
+            once: true,
+          }}
+          transition={{
+            delay: 0.3,
+            duration: 0.5,
+          }}
+          className="mt-8 text-center"
+        >
+          <p className="text-xs text-slate-400 sm:text-sm">
+            Trusted librarians helping readers find their next
+            favorite book.
+          </p>
+        </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 }
