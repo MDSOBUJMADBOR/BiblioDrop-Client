@@ -11,34 +11,38 @@ import { authClient } from "@/lib/auth-client";
 export default function LibrarianOverview() {
   const userData = authClient.useSession(); 
   const user = userData.data?.user;  
-  console.log(user?.email,'user');
+ 
   const [booksCount, setBooksCount] = useState(0);
   const [deliveriesCount, setDeliveriesCount] = useState(0);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [bookRes, deliveryRes] = await Promise.all([
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost/email/${user?.email}`),
-          fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/delivery-request/email/${user?.email}`
-          ),
-        ]);
+ useEffect(() => {
+  if (!user?.email) return;
 
-        const books = await bookRes.json();
-        const deliveries = await deliveryRes.json();
+  const fetchData = async () => {
+    try {
+      const [bookRes, deliveryRes] = await Promise.all([
+        fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/bookpost/email/${user.email}`
+        ),
+        fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/delivery-request/email/${user.email}`
+        ),
+      ]);
 
-        setBooksCount(Array.isArray(books) ? books.length : 0);
-        setDeliveriesCount(
-          Array.isArray(deliveries) ? deliveries.length : 0
-        );
-      } catch (error) {
-        console.error("Dashboard Error:", error);
-      }
-    };
+      const books = await bookRes.json();
+      const deliveries = await deliveryRes.json();
 
-    fetchData();
-  }, []);
+      setBooksCount(Array.isArray(books) ? books.length : 0);
+      setDeliveriesCount(
+        Array.isArray(deliveries) ? deliveries.length : 0
+      );
+    } catch (error) {
+      alert.error("Dashboard Error:", error);
+    }
+  };
+
+  fetchData();
+}, [user?.email]);
 
   const stats = [
     {
