@@ -25,31 +25,35 @@ export default function Overview() {
     { name: "Delivered", value: 0 },
   ]);
 
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/delivery-requests/${user?.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const pending = data.filter(
-          (item) => item.status === "pending"
-        ).length;
+useEffect(() => {
+  if (!user?.email) return;
 
-        const delivered = data.filter(
-          (item) => item.status === "delivered"
-        ).length;
+  fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/delivery-requests/${user.email}`
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      const pending = data.filter(
+        (item) => item.status === "pending"
+      ).length;
 
-        setChartData([
-          {
-            name: "Pending",
-            value: pending,
-          },
-          {
-            name: "Delivered",
-            value: delivered,
-          },
-        ]);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+      const delivered = data.filter(
+        (item) => item.status === "delivered"
+      ).length;
+
+      setChartData([
+        {
+          name: "Pending",
+          value: pending,
+        },
+        {
+          name: "Delivered",
+          value: delivered,
+        },
+      ]);
+    })
+    .catch((err) => alert(err));
+}, [user?.email]);
 
   return (
     <div className="bg-white rounded-2xl shadow-md p-4 sm:p-6">

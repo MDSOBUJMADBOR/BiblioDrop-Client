@@ -32,7 +32,7 @@ export default function DeliveryHistory() {
 
         setBooks(Array.isArray(data) ? data : []);
       } catch (error) {
-        console.error("Fetch error:", error);
+        alert.error("Fetch error:", error);
       } finally {
         setLoading(false);
       }
