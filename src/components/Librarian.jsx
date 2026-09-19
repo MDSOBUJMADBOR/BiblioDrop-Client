@@ -15,7 +15,7 @@ export default function Librarian() {
         const data = await res.json();
         setLibrarians(data); 
       } catch (error) {
-        console.error(error);
+        alert.error(error);
       } finally {
         setLoading(false);
       }

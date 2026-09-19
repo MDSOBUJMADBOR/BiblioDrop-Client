@@ -24,9 +24,9 @@ export default function Footer() {
       { label: 'Help Center', href: '#' },
       { label: 'Shipping Info', href: '#' },
       { label: 'Returns', href: '#' },
-      { label: 'FAQ', href: '#' },
+      { label: 'FAQ', href: '#' }, 
     ]
-  };
+  }; 
 
   return (
     <footer className="w-full font-sans">
