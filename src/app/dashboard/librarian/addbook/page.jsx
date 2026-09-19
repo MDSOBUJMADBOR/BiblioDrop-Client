@@ -53,7 +53,7 @@ const handleImageUpload = async (e) => {
     );
 
     const data = await res.json();
-console.log(data);
+
     if (data.success) {
       setImageUrl(data.data.url);
     } else {
@@ -114,7 +114,7 @@ const {data:token} = await authClient.token()
 });
 
     const data = await res.json();
-console.log(data);
+
     if (data.acknowledged) {      
       toast.success("Book added successfully ✅");
 

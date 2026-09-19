@@ -41,7 +41,7 @@ export default function AdminOverviewPage() {
           transactions: transactions?.length || 0,
         });
       } catch (err) {
-        console.log(err);
+        alert(err);
       } finally {
         setLoading(false);
       }
