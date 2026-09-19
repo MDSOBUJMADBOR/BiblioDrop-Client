@@ -35,7 +35,7 @@ export default function ManageDeliveries() {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+       
         setLoading(false);
       });
   }, [user?.email]);
@@ -66,7 +66,7 @@ export default function ManageDeliveries() {
         );
       }
     } catch (error) {
-      console.error(error);
+      alert.error(error);
     }
   };
 

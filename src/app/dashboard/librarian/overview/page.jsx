@@ -17,40 +17,46 @@ const COLORS = ["#3B82F6", "#10B981"];
 export default function LibrarianStatistics() {
   const userData = authClient.useSession();  
 const user = userData.data?.user;  
-console.log(user?.email,'user');
+
 
   const [chartData, setChartData] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [booksRes, deliveriesRes] = await Promise.all([
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookpost/email/${user?.email}`),
-          fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/delivery-request/email/${user?.email}`
-          ),
-        ]);
+useEffect(() => {
+  if (!user?.email) return;
 
-        const books = await booksRes.json();
-        const deliveries = await deliveriesRes.json();
+  const fetchData = async () => {
+    try {
+      const [booksRes, deliveriesRes] = await Promise.all([
+        fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/bookpost/email/${user.email}`
+        ),
+        fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/delivery-request/email/${user.email}`
+        ),
+      ]);
 
-        setChartData([
-          {
-            name: "Add Book",
-            value: Array.isArray(books) ? books.length : 0,
-          },
-          {
-            name: "Manage Deliveries",
-            value: Array.isArray(deliveries) ? deliveries.length : 0,
-          },
-        ]);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+      const books = await booksRes.json();
+      const deliveries = await deliveriesRes.json();
 
-    fetchData();
-  }, []);
+      setChartData([
+        {
+          name: "Add Book",
+          value: Array.isArray(books) ? books.length : 0,
+        },
+        {
+          name: "Manage Deliveries",
+          value: Array.isArray(deliveries)
+            ? deliveries.length
+            : 0,
+        },
+      ]);
+    } catch (error) {
+      alert.error("Statistics Error:", error);
+    }
+  };
+
+  fetchData();
+}, [user?.email]);
 
   return (
     <div className="bg-white rounded-xl p-6 shadow">

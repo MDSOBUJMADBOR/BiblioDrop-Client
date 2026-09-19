@@ -27,7 +27,7 @@ const ManageInventory = () => {
         const data = await res.json();
         setBooks(data);
       } catch (error) {
-        console.error("Error fetching books:", error);
+        alert.error("Error fetching books:", error);
       }
     };
 
