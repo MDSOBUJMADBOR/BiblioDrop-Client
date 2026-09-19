@@ -7,7 +7,7 @@ import Link from 'next/link';
 const FeaturedBooks = async () => {
 
 const Featured = await FeaturedData();
-console.log(Featured,'Fetured');
+
     return (
        <div className='max-w-7xl mx-auto px-10 py-10'>
  <h1 className='font-bold text-3xl my-3'>Featured Books</h1>  
