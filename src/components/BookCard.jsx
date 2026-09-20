@@ -33,7 +33,7 @@ const BookCard = ({ book }) => {
       whileHover={{
         y: -8,
       }}
-      className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:border-blue-200 hover:shadow-xl"
+      className="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:border-blue-200 hover:shadow-xl"
     >
       {/* ================= IMAGE ================= */}
       <div className="relative h-64 overflow-hidden bg-gray-100">
@@ -123,7 +123,7 @@ const BookCard = ({ book }) => {
         <Link href={`/books/${_id}`} className="block">
           <Button
             fullWidth
-            className="group/button h-11 rounded-xl bg-gray-900 font-semibold text-white transition-all duration-300 hover:bg-blue-600"
+            className="group/button h-11 rounded-xl bg-transparent border text-black font-semibold hover:text-white transition-all duration-300 hover:bg-blue-600"
           >
             <span>View Details</span>
 
