@@ -66,7 +66,7 @@ BiblioDrop is a complete book delivery management system designed to simplify th
 ## Deployment
 
 - Vercel (Frontend)
-- Render / Railway (Backend)
+- Vercel (Backend)
 
 ---
 
