@@ -5,11 +5,6 @@ A modern **Full-Stack Book Delivery Management Platform** built with **Next.js, 
 ---
 
 
-## 📷 Project Screenshot
-
-> **Add your project screenshot here**
-
-![BiblioDrop Screenshot](./public/project-preview.png)
 
 ---
 
